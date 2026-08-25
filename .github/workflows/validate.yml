@@ -2,7 +2,7 @@ name: Validate engineering baseline
 
 on:
   push:
-    branches: [main]
+    branches: [main, "feat/**"]
   pull_request:
     branches: [main]
 
@@ -24,8 +24,11 @@ jobs:
       - name: Validate master parameters
         run: python scripts/validate_parameters.py
 
-      - name: Run resonance unit tests
+      - name: Run resonance and NVH unit tests
         run: python -m unittest discover -s tests -p "test_*.py"
+
+      - name: Generate engine-order baseline
+        run: python scripts/engine_order_map.py --csv validation/engine_order_map.csv
 
       - name: Run NVH baseline screen
         run: python scripts/nvh_screen.py

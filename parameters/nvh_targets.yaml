@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 status: DESIGN_DEFINITION
 
 provenance:
@@ -23,7 +23,11 @@ engine_orders:
   tracked_orders:
     value: [0.5, 1.0, 2.0, 4.0, 8.0]
     status: REFERENCE
-    note: Expand after crank phasing, valvetrain and accessory architecture are frozen.
+    note: Core screening set. Expand only when crank phasing, valvetrain and accessory architecture support the added lines.
+  candidate_orders:
+    value: [1.5, 3.0, 6.0]
+    status: SCREENING_ONLY
+    note: Investigation set, not yet authoritative excitation families.
 
 operating_envelope:
   rpm_min:
@@ -50,14 +54,51 @@ modal_screening:
     value: 10.0
     status: PROVISIONAL
     note: Screening target only; replace with subsystem-specific criteria after FEA/test planning.
+  analysis_band_multiplier:
+    value: 1.5
+    status: PROVISIONAL
+    note: Modal extraction should extend above the highest tracked excitation; this multiplier is a screening rule, not a certification rule.
   natural_frequencies_hz:
     value: []
     status: UNKNOWN
+
+source_path_receiver:
+  - id: combustion_structure
+    source: combustion_pressure
+    path: piston_rod_crank_main_bearings_block_mounts
+    receivers: [block_surfaces, chassis, cabin]
+    status: REFERENCE
+  - id: valvetrain_head
+    source: valve_and_rocker_events
+    path: valvetrain_head_cover
+    receivers: [head_cover, airborne_field]
+    status: REFERENCE
+  - id: intake_pulse
+    source: intake_pressure_pulses
+    path: runners_plenum_throttle_airbox
+    receivers: [engine_bay, cabin, exterior]
+    status: REFERENCE
+  - id: exhaust_pulse
+    source: exhaust_pressure_pulses
+    path: ports_headers_exhaust_system
+    receivers: [underbody, cabin, exterior]
+    status: REFERENCE
+  - id: accessories
+    source: belt_gears_pumps_fans
+    path: brackets_front_cover_block
+    receivers: [engine_structure, chassis, airborne_field]
+    status: REFERENCE
 
 premium_nvh:
   philosophy:
     value: CONTROL_NOT_SILENCE
     status: REFERENCE
+  desired_character:
+    idle: DEEP_STABLE_MECHANICAL
+    cruise: LOW_FATIGUE_LOW_DRONE
+    load: PROGRESSIVE_INTAKE_EXHAUST_PRESENCE
+    high_rpm: CLEAN_HARMONIC_RISE_WITHOUT_HARSHNESS
+    status: DESIGN_INTENT
   unwanted_drone_bands_hz:
     value: []
     status: UNKNOWN
@@ -70,6 +111,34 @@ premium_nvh:
   mount_isolation_targets:
     value: null
     status: UNKNOWN
+  transient_character:
+    tip_in: CONTROLLED_RISE_NO_BOOM
+    lift_off: CLEAN_DECAY_NO_RINGING
+    status: DESIGN_INTENT
+
+measurement_plan:
+  structural_points:
+    - block_main_bearing_region
+    - left_head
+    - right_head
+    - front_cover
+    - oil_pan
+    - mount_engine_side
+    - mount_chassis_side
+  acoustic_points:
+    - intake_nearfield
+    - exhaust_nearfield
+    - engine_bay_reference
+    - cabin_driver_ear
+  minimum_metrics:
+    - narrowband_spectrum
+    - engine_order_spectrum
+    - acceleration_rms
+    - transfer_path_transmissibility
+    - sound_pressure_level
+    - coherence_when_applicable
+    - ringdown_decay
+  status: DESIGN_INTENT
 
 analysis_gates:
   nvh_baseline_ready:
