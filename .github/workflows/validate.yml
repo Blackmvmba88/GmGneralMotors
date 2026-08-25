@@ -23,3 +23,9 @@ jobs:
 
       - name: Validate master parameters
         run: python scripts/validate_parameters.py
+
+      - name: Run resonance unit tests
+        run: python -m unittest discover -s tests -p "test_*.py"
+
+      - name: Run NVH baseline screen
+        run: python scripts/nvh_screen.py

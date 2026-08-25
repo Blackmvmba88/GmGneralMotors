@@ -1,0 +1,89 @@
+schema_version: 1
+status: DESIGN_DEFINITION
+
+provenance:
+  source_repository: Blackmvmba88/archimedes-quantum-resonance-engine
+  imported_scope:
+    - acoustic_spectrum_methods
+    - cavity_mode_reasoning
+    - reynolds_screening
+    - strouhal_screening
+    - aeroacoustic_scaling_concepts
+    - geometry_resonance_optimization_concept
+  excluded_from_automotive_claims:
+    - quantum_matter_performance_claims
+    - jaynes_cummings_as_engine_mechanism
+    - quantum_error_correction_as_engine_mechanism
+
+engine_orders:
+  architecture: V8_four_stroke
+  firing_events_per_crank_revolution:
+    value: 4.0
+    status: CALCULATED
+  tracked_orders:
+    value: [0.5, 1.0, 2.0, 4.0, 8.0]
+    status: REFERENCE
+    note: Expand after crank phasing, valvetrain and accessory architecture are frozen.
+
+operating_envelope:
+  rpm_min:
+    value: null
+    status: UNKNOWN
+  rpm_max:
+    value: null
+    status: UNKNOWN
+  screening_rpm_min:
+    value: 600
+    unit: rpm
+    status: REFERENCE
+  screening_rpm_max:
+    value: 7000
+    unit: rpm
+    status: REFERENCE
+  screening_step:
+    value: 100
+    unit: rpm
+    status: REFERENCE
+
+modal_screening:
+  preliminary_separation_margin_percent:
+    value: 10.0
+    status: PROVISIONAL
+    note: Screening target only; replace with subsystem-specific criteria after FEA/test planning.
+  natural_frequencies_hz:
+    value: []
+    status: UNKNOWN
+
+premium_nvh:
+  philosophy:
+    value: CONTROL_NOT_SILENCE
+    status: REFERENCE
+  unwanted_drone_bands_hz:
+    value: []
+    status: UNKNOWN
+  desired_signature_bands_hz:
+    value: []
+    status: UNKNOWN
+  cabin_transfer_targets:
+    value: null
+    status: UNKNOWN
+  mount_isolation_targets:
+    value: null
+    status: UNKNOWN
+
+analysis_gates:
+  nvh_baseline_ready:
+    requires:
+      - operating_rpm_envelope
+      - engine_order_map
+      - source_path_receiver_map
+      - preliminary_modal_plan
+      - intake_exhaust_resonance_plan
+  nvh_integrated_pass:
+    requires:
+      - structural_modal_results
+      - harmonic_response_screen
+      - torsional_screen
+      - mount_path_review
+      - intake_exhaust_acoustic_review
+      - resonance_coincidence_register
