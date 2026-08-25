@@ -10,7 +10,12 @@ from __future__ import annotations
 
 import argparse
 import csv
+import sys
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from engineering.nvh import (
     generate_order_map,
@@ -23,6 +28,8 @@ from engineering.nvh import (
 
 
 def write_csv(path: Path, rows) -> None:
+    if not path.is_absolute():
+        path = ROOT / path
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.writer(handle)
@@ -33,11 +40,12 @@ def write_csv(path: Path, rows) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--targets", default="parameters/nvh_targets.yaml")
+    parser.add_argument("--targets", type=Path, default=Path("parameters/nvh_targets.yaml"))
     parser.add_argument("--csv", type=Path, default=None)
     args = parser.parse_args()
 
-    targets = load_nvh_targets(args.targets)
+    targets_path = args.targets if args.targets.is_absolute() else ROOT / args.targets
+    targets = load_nvh_targets(targets_path)
     envelope = resolve_operating_envelope(targets)
     rows = generate_order_map(targets)
 
