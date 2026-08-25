@@ -65,7 +65,11 @@ def tracked_orders(targets: dict[str, Any]) -> list[float]:
 def generate_order_map(targets: dict[str, Any]) -> list[EngineOrderPoint]:
     envelope = resolve_operating_envelope(targets)
     rows: list[EngineOrderPoint] = []
-    for rpm in range(envelope.rpm_min, envelope.rpm_max + 1, envelope.rpm_step):
+    rpm_values = list(range(envelope.rpm_min, envelope.rpm_max + 1, envelope.rpm_step))
+    if not rpm_values or rpm_values[-1] != envelope.rpm_max:
+        rpm_values.append(envelope.rpm_max)
+
+    for rpm in rpm_values:
         for order in tracked_orders(targets):
             rows.append(
                 EngineOrderPoint(
