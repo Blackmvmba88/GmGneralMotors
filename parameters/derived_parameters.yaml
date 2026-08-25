@@ -1,0 +1,31 @@
+schema_version: 1
+baseline: 0.1.0
+note: Derived values are calculated from master parameters and must not override them.
+
+derived:
+  crank_radius_mm:
+    formula: stroke_mm / 2
+    value: 44.45
+    status: CALCULATED
+  displacement_L:
+    formula: pi / 4 * bore_mm^2 * stroke_mm * cylinders / 1e6
+    value: 5.765926
+    status: CALCULATED
+  nominal_displacement_delta_L:
+    formula: displacement_L - nominal_displacement_label_L
+    value: 0.065926
+    status: CALCULATED
+  nominal_displacement_delta_percent:
+    formula: abs(displacement_L - nominal_displacement_label_L) / nominal_displacement_label_L * 100
+    value: 1.1566
+    status: CALCULATED
+
+flags:
+  - id: DISP-001
+    severity: INFO
+    state: OPEN
+    message: Visible bore/stroke values calculate to approximately 5.766 L while the blueprint label says 5.7 L. Treat 5.7 L as nominal until provenance is resolved.
+  - id: PISTON-001
+    severity: WARNING
+    state: OPEN
+    message: Piston diameter reference equals bore. Operating piston OD/clearance semantics must be established before locking geometry.

@@ -1,0 +1,154 @@
+schema_version: 1
+baseline: 0.1.0
+project: GmGneralMotors_V8
+
+units:
+  linear: mm
+  angular: deg
+  displacement: L
+
+architecture:
+  type:
+    value: V8
+    status: LOCKED
+  bank_angle_deg:
+    value: 90.0
+    status: REFERENCE
+  cylinders:
+    value: 8
+    status: LOCKED
+  cylinders_per_bank:
+    value: 4
+    status: LOCKED
+  valvetrain:
+    value: OHV_pushrod
+    status: REFERENCE
+  cooling:
+    value: liquid
+    status: REFERENCE
+  lubrication:
+    value: wet_sump
+    status: REFERENCE
+
+cylinder:
+  bore_mm:
+    value: 101.6
+    status: REFERENCE
+    source: current_blueprint
+  stroke_mm:
+    value: 88.9
+    status: REFERENCE
+    source: current_blueprint
+  center_spacing_mm:
+    value: null
+    status: UNKNOWN
+
+engine_envelope:
+  width_mm:
+    value: 680.0
+    status: REFERENCE
+    source: current_blueprint
+  length_mm:
+    value: 810.0
+    status: REFERENCE
+    source: current_blueprint
+  height_mm:
+    value: 620.0
+    status: REFERENCE
+    source: current_blueprint
+
+bank_reference:
+  length_mm:
+    value: 530.0
+    status: REFERENCE
+    source: current_blueprint
+  height_mm:
+    value: 255.0
+    status: REFERENCE
+    source: current_blueprint
+  deck_height_mm:
+    value: null
+    status: UNKNOWN
+
+piston:
+  diameter_reference_mm:
+    value: 101.6
+    status: REFERENCE
+    source: current_blueprint
+    note: Must not be treated as locked operating OD until bore clearance semantics are resolved.
+  total_height_reference_mm:
+    value: 64.8
+    status: REFERENCE
+    source: current_blueprint
+  compression_height_mm:
+    value: null
+    status: UNKNOWN
+  wrist_pin_diameter_mm:
+    value: null
+    status: UNKNOWN
+
+connecting_rod:
+  center_to_center_length_mm:
+    value: null
+    status: UNKNOWN
+  big_end_bore_mm:
+    value: null
+    status: UNKNOWN
+  small_end_bore_mm:
+    value: null
+    status: UNKNOWN
+
+crankshaft:
+  main_journal_diameter_mm:
+    value: null
+    status: UNKNOWN
+  rod_journal_diameter_mm:
+    value: null
+    status: UNKNOWN
+  crank_station_spacing_mm:
+    value: null
+    status: UNKNOWN
+  phasing:
+    value: null
+    status: UNKNOWN
+
+camshaft:
+  axis_offset_x_mm:
+    value: null
+    status: UNKNOWN
+  axis_offset_y_mm:
+    value: null
+    status: UNKNOWN
+  axis_offset_z_mm:
+    value: null
+    status: UNKNOWN
+
+cylinder_head:
+  thickness_mm:
+    value: null
+    status: UNKNOWN
+  chamber_volume_cc:
+    value: null
+    status: UNKNOWN
+  intake_valve_diameter_mm:
+    value: null
+    status: UNKNOWN
+  exhaust_valve_diameter_mm:
+    value: null
+    status: UNKNOWN
+
+nominal:
+  displacement_label_L:
+    value: 5.7
+    status: REFERENCE
+    source: current_blueprint
+
+coordinate_system:
+  x: left_right
+  y: front_rear
+  z: down_up
+  front_direction: negative_y
+  rear_direction: positive_y
+  left_bank: negative_x
+  right_bank: positive_x
+  origin: crank_centerline__engine_midplane__front_datum
