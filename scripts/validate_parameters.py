@@ -16,7 +16,15 @@ import yaml
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 PARAM_FILE = ROOT / "parameters" / "master_parameters.yaml"
-ALLOWED_STATES = {"UNKNOWN", "ESTIMATED", "REFERENCE", "CALCULATED", "VERIFIED", "LOCKED"}
+ALLOWED_STATES = {
+    "UNKNOWN",
+    "ESTIMATED",
+    "REFERENCE",
+    "CALCULATED",
+    "VERIFIED",
+    "LOCKED",
+    "DECISION_PENDING",
+}
 
 
 def fail(message: str) -> None:
@@ -71,6 +79,7 @@ def main() -> int:
     delta_percent = abs(displacement_l - nominal) / nominal * 100.0
 
     print("V8 parameter baseline")
+    print(f"  phase:                {data.get('phase')}")
     print(f"  bore:                 {bore:.3f} mm")
     print(f"  stroke:               {stroke:.3f} mm")
     print(f"  crank radius:         {crank_radius:.3f} mm")
@@ -85,20 +94,28 @@ def main() -> int:
         fail("calculated displacement differs from nominal label by more than 2%")
 
     unknown_paths: list[str] = []
+    pending_paths: list[str] = []
 
-    def collect_unknowns(node: Any, path: str = "root") -> None:
+    def collect_open_items(node: Any, path: str = "root") -> None:
         if isinstance(node, dict):
-            if node.get("status") == "UNKNOWN":
+            status = node.get("status")
+            if status == "UNKNOWN":
                 unknown_paths.append(path)
+            elif status == "DECISION_PENDING":
+                pending_paths.append(path)
             for key, child in node.items():
-                collect_unknowns(child, f"{path}.{key}")
+                collect_open_items(child, f"{path}.{key}")
         elif isinstance(node, list):
             for index, child in enumerate(node):
-                collect_unknowns(child, f"{path}[{index}]")
+                collect_open_items(child, f"{path}[{index}]")
 
-    collect_unknowns(data)
+    collect_open_items(data)
     print(f"  unresolved parameters: {len(unknown_paths)}")
     for path in unknown_paths:
+        print(f"    - {path}")
+
+    print(f"  pending design decisions: {len(pending_paths)}")
+    for path in pending_paths:
         print(f"    - {path}")
 
     print("PASS: textual engineering baseline is internally valid.")

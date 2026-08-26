@@ -1,12 +1,14 @@
 # V8 ENGINE — Engineering Roadmap
 
-**Baseline:** 0.2.0  
-**Current phase:** Phase 0 — Project Baseline  
+**Baseline:** 0.3.0  
+**Current phase:** Phase 1 — Dimensional Reconstruction  
 **3D modeling:** LOCKED
 
-## Phase 0 — Project baseline
+## Phase 0 — Project baseline ✅
 
 Define the problem before defining geometry.
+
+Completed:
 
 - [x] Units convention
 - [x] Global XYZ convention
@@ -21,59 +23,72 @@ Define the problem before defining geometry.
 - [x] Validation framework
 - [x] Resonance / NVH treated as first-class architecture
 - [x] Classical resonance research import documented
-- [ ] Resolve all critical unknown dimensions
-- [ ] Freeze crank phasing strategy
-- [ ] Freeze operating RPM envelope
-- [ ] Approve master skeleton specification
+- [x] Critical unknown register established
+- [x] Phase/gate ownership defined
 
-**Exit gate:** `BASELINE_READY`
+The unresolved dimensions, crank phasing, RPM envelope and skeleton geometry are intentionally carried into their owning downstream phases instead of blocking the project-baseline freeze.
 
-## Phase 1 — Dimensional reconstruction
+**Exit gate:** `BASELINE_READY` — PASS
+
+## Phase 1 — Dimensional reconstruction 🔄
 
 Convert the reference blueprint into a coherent dimensional system.
 
-Required work:
+Completed in baseline 0.3.0:
 
-- overall envelope audit
-- bore/stroke/displacement audit
-- deck geometry
-- cylinder center spacing
-- crank station spacing
-- crank journal dimensions
-- connecting-rod length
-- piston compression height and wrist-pin geometry
-- camshaft position
-- head thickness and chamber envelope
-- accessory/flywheel interface planes
+- [x] bore/stroke/displacement audit
+- [x] exact displacement derived from visible geometry
+- [x] displacement authority alternatives calculated
+- [x] crank-radius relation frozen
+- [x] bank half-angle relation frozen
+- [x] piston/bore clearance relation frozen
+- [x] deck-stack relation frozen
+- [x] compression-ratio dependency relation frozen
+- [x] executable dimensional audit added
+- [x] dimensional unit tests added
+
+Still required:
+
+- [ ] select displacement authority mode
+- [ ] close overall envelope interpretation
+- [ ] define cylinder center spacing
+- [ ] define longitudinal bank stagger
+- [ ] close deck stack
+- [ ] resolve piston operating clearance / wrist pin
+- [ ] define crank journal dimensions
+- [ ] define crank station spacing
+- [ ] define connecting-rod length
+- [ ] define camshaft position
+- [ ] define head thickness and chamber volume model
+- [ ] define gasket/deck/piston-crown volume inputs
+- [ ] define accessory/flywheel interface planes
+- [ ] attach provenance/status to every critical input
 
 No Blender. No aesthetic mesh work.
 
 **Exit gate:** `DIMENSIONAL_MODEL_VALIDATED`
 
-## Gate R0 — Resonance and energy-flow baseline
+## Gate R0 — Resonance and energy-flow baseline 🔄
 
-This gate runs before authoritative structural geometry is frozen.
+This gate runs in parallel with Phase 1 before authoritative structural geometry is frozen.
 
-Required work:
+Completed:
 
-- define operating RPM range
-- generate engine-order map across RPM
-- identify dominant combustion, rotating, reciprocating and valvetrain excitations
-- define preliminary modal-separation screening margin
-- map source → path → receiver energy routes
-- classify surfaces likely to behave as radiators
-- identify intake/exhaust cavity and quarter-wave risks
-- identify vortex-shedding / aero-acoustic risks
-- define premium sound-signature objectives separately from structural safety objectives
+- [x] engine-order map generator
+- [x] source → path → receiver architecture
+- [x] preliminary modal-separation screening
+- [x] premium acoustic-signature design intent
+- [x] structural modal/harmonic analysis plan
+- [x] intake/exhaust resonance model families identified
 
-Imported research foundations:
+Still required:
 
-- FFT / spectra / THD
-- rectangular acoustic modes
-- Reynolds number
-- Strouhal frequency
-- Lighthill/Curle scaling concepts
-- geometry-versus-resonance optimization
+- [ ] freeze operating RPM range
+- [ ] freeze crank phasing/firing order
+- [ ] add rotating/reciprocating force-order amplitudes
+- [ ] add valvetrain event families
+- [ ] add accessory speed/blade/tooth-pass families
+- [ ] define benchmark-derived premium numeric targets
 
 **Exit gate:** `NVH_BASELINE_READY`
 
@@ -91,6 +106,8 @@ Create the minimum authoritative geometry:
 - pulley plane
 
 All entities must be parameter-driven.
+
+The skeleton may not be frozen until Phase 1 supplies every required spatial input.
 
 **Exit gate:** `SKELETON_LOCKED`
 
@@ -274,13 +291,11 @@ Release must include source parameters, engineering geometry, validation reports
 ## Critical path
 
 ```text
-PARAMETERS
+PROJECT BASELINE ✅
   ↓
-DATUMS
-  ↓
-DIMENSIONAL MODEL
-  ↓
-NVH BASELINE / ORDER MAP
+DIMENSIONAL RECONSTRUCTION ← CURRENT
+  ↘
+   NVH BASELINE / ORDER MAP
   ↓
 MASTER SKELETON
   ↓

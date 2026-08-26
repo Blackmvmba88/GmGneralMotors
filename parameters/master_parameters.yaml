@@ -1,6 +1,7 @@
 schema_version: 1
-baseline: 0.1.0
+baseline: 0.3.0
 project: GmGneralMotors_V8
+phase: PHASE_1_DIMENSIONAL_RECONSTRUCTION
 
 units:
   linear: mm
@@ -42,6 +43,9 @@ cylinder:
   center_spacing_mm:
     value: null
     status: UNKNOWN
+  bank_longitudinal_offset_mm:
+    value: null
+    status: UNKNOWN
 
 engine_envelope:
   width_mm:
@@ -69,6 +73,9 @@ bank_reference:
   deck_height_mm:
     value: null
     status: UNKNOWN
+  deck_clearance_mm:
+    value: null
+    status: UNKNOWN
 
 piston:
   diameter_reference_mm:
@@ -80,10 +87,20 @@ piston:
     value: 64.8
     status: REFERENCE
     source: current_blueprint
+  operating_diameter_mm:
+    value: null
+    status: UNKNOWN
+    relation: bore_mm - piston_to_wall_diametral_clearance_mm
+  piston_to_wall_diametral_clearance_mm:
+    value: null
+    status: UNKNOWN
   compression_height_mm:
     value: null
     status: UNKNOWN
   wrist_pin_diameter_mm:
+    value: null
+    status: UNKNOWN
+  crown_volume_cc:
     value: null
     status: UNKNOWN
 
@@ -137,16 +154,52 @@ cylinder_head:
     value: null
     status: UNKNOWN
 
+head_gasket:
+  bore_mm:
+    value: null
+    status: UNKNOWN
+  compressed_thickness_mm:
+    value: null
+    status: UNKNOWN
+
+package_planes:
+  flywheel_plane_y_mm:
+    value: null
+    status: UNKNOWN
+  pulley_plane_y_mm:
+    value: null
+    status: UNKNOWN
+
 nominal:
   displacement_label_L:
     value: 5.7
     status: REFERENCE
     source: current_blueprint
+  displacement_label_cid:
+    value: 350.0
+    status: REFERENCE
+    source: current_blueprint
+  compression_ratio:
+    value: 10.0
+    status: REFERENCE
+    source: current_blueprint
+    note: Cannot be verified until clearance-volume geometry is resolved.
+
+dimensional_authority:
+  selected_mode:
+    value: null
+    status: DECISION_PENDING
+    allowed:
+      - blueprint_geometry
+      - exact_350_cid_with_bore_fixed
+      - exact_5_700_l_with_bore_fixed
 
 coordinate_system:
   x: left_right
   y: front_rear
   z: down_up
+  positive_z: up
+  negative_z: down
   front_direction: negative_y
   rear_direction: positive_y
   left_bank: negative_x

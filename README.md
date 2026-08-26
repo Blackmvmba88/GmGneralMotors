@@ -1,16 +1,18 @@
 # GmGneralMotors — Parametric V8 Engineering Project
 
-> **Status:** DESIGN DEFINITION  
+> **Status:** PHASE 1 — DIMENSIONAL RECONSTRUCTION  
 > **3D modeling:** LOCKED  
 > **Blender:** LOCKED  
-> **Baseline:** v0.2.0
+> **Baseline:** v0.3.0
 
-This repository is the engineering source of truth for a modular, parametric V8 engine digital master. The immediate goal is **not** to make a pretty mesh. The goal is to define enough geometry, interfaces, parameters, kinematics, resonance behavior, energy paths, and validation rules that the final engine becomes a consequence of the system.
+This repository is the engineering source of truth for a modular, parametric V8 engine digital master. The goal is not to draw an engine by eye; it is to define enough geometry, interfaces, parameters, kinematics, resonance behavior, energy paths and validation rules that the engine becomes a reproducible consequence of the system.
 
 ## Engineering chain of authority
 
 ```text
 MASTER PARAMETERS
+      ↓
+DIMENSIONAL RELATIONS
       ↓
 MASTER SKELETON
       ↓
@@ -25,7 +27,7 @@ VALIDATION
 VISUAL / BLENDER MODEL
 ```
 
-If a component only fits after manual nudging, scaling, or arbitrary rotation, the error is upstream and must be fixed in the parameter, datum, constraint, or interface definition.
+If a component only fits after manual nudging, scaling or arbitrary rotation, the error is upstream and must be fixed in the parameter, datum, constraint or interface definition.
 
 If a structure is strong statically but lands on a harmful resonance in the operating envelope, it is **not** considered premium-ready.
 
@@ -43,49 +45,80 @@ If a structure is strong statically but lands on a harmful resonance in the oper
 - NVH / resonance treated as a first-class design system
 - energy-path mapping from combustion source to structure, mounts, intake, exhaust and cabin
 
+## Current phase — Dimensional reconstruction
+
+The visual blueprint is being converted into a governed dimensional model.
+
+Current visible bore/stroke:
+
+- bore = `101.6 mm`
+- stroke = `88.9 mm`
+- cylinders = `8`
+
+Derived exactly from those inputs:
+
+- crank radius = `44.45 mm`
+- bank half-angle = `45°`
+- displacement = `5.765925746 L`
+- displacement = `351.858377 CID`
+- swept volume per cylinder = `720.740718 cc`
+
+Therefore the visible `5.7 L / 350 CID` label remains nominal/reference until a displacement authority mode is selected.
+
+Three candidate interpretations are tracked:
+
+1. preserve blueprint geometry: `101.6 × 88.9 mm`;
+2. preserve bore and target exactly `350 CID`: stroke `88.430465 mm`;
+3. preserve bore and target exactly `5.700 L`: stroke `87.883546 mm`.
+
+No candidate is silently promoted to `LOCKED`.
+
+See:
+
+- `docs/dimensional_reconstruction.md`
+- `docs/dimensional_model.md`
+- `parameters/dimensional_constraints.yaml`
+- `engineering/dimensional.py`
+- `scripts/dimensional_audit.py`
+
+## Governing dimensional relations
+
+The project can freeze equations before all numeric inputs are known.
+
+```text
+crank_radius = stroke / 2
+bank_half_angle = bank_angle / 2
+piston_operating_OD = bore - diametral_piston_clearance
+deck_height = crank_radius + rod_length + compression_height + deck_clearance
+compression_ratio = (swept_volume + clearance_volume) / clearance_volume
+```
+
+This allows uncertainty to stay explicit without allowing geometry to drift.
+
 ## Resonance / premium NVH policy
 
-The project now imports the **classical engineering layer** of `Blackmvmba88/archimedes-quantum-resonance-engine` as a research foundation for:
+The project imports the **classical engineering layer** of `Blackmvmba88/archimedes-quantum-resonance-engine` as a research foundation for:
 
 - FFT / spectral analysis
 - harmonic distortion
 - cavity modes
-- pressure-field thinking
+- pressure-field reasoning
 - Reynolds / flow-regime checks
 - Strouhal vortex-shedding frequency
 - aero-acoustic coupling
 - geometry-vs-resonance optimization
 
-The quantum-matter modules from that laboratory remain a separate research domain. They are **not** used as evidence that a combustion engine has a quantum-performance mechanism. For this V8, premium resonance claims must be backed by measurable classical structural dynamics, acoustics, fluid dynamics and test data.
+The quantum-matter modules remain a separate research domain. They are not used as evidence for a combustion-engine performance mechanism. Premium resonance claims must be backed by measurable classical structural dynamics, acoustics, fluid dynamics and test data.
 
 See:
 
 - `docs/nvh_resonance_architecture.md`
+- `docs/nvh_engine_order_map.md`
+- `docs/premium_acoustic_signature.md`
+- `docs/structural_modal_analysis_plan.md`
 - `docs/research/archimedes_resonance_import.md`
-- `docs/ADR-0002-resonance-first-class.md`
 - `parameters/nvh_targets.yaml`
 - `engineering/resonance.py`
-
-## Current blueprint reference
-
-The current blueprint is treated as **concept/reference geometry**, not manufacturing authority.
-
-Initial visible values:
-
-| Parameter | Reference |
-|---|---:|
-| Bore | 101.6 mm |
-| Stroke | 88.9 mm |
-| Nominal displacement label | 5.7 L |
-| Overall width | 680 mm |
-| Overall length | 810 mm |
-| Overall height | 620 mm |
-| Bank reference length | 530 mm |
-| Bank reference height | 255 mm |
-| Piston diameter reference | 101.6 mm |
-| Piston height reference | 64.8 mm |
-
-**Important:** 101.6 mm bore × 88.9 mm stroke × 8 cylinders derives to approximately **5.766 L**, so the 5.7 L label is currently treated as nominal rather than exact. The piston diameter equaling the bore is also flagged for semantic/clearance verification before locking.
 
 ## Repository map
 
@@ -96,32 +129,37 @@ Initial visible values:
 ├── CHANGELOG.md
 ├── V8_ENGINE_TECHNICAL_CONTRACT.md
 ├── docs/
-│   ├── ICD.md
-│   ├── coordinate_system.md
 │   ├── dimensional_model.md
+│   ├── dimensional_reconstruction.md
+│   ├── skeleton_spec.md
 │   ├── kinematics.md
 │   ├── nvh_resonance_architecture.md
+│   ├── nvh_engine_order_map.md
+│   ├── premium_acoustic_signature.md
+│   ├── structural_modal_analysis_plan.md
 │   ├── validation.md
-│   ├── ADR-0002-resonance-first-class.md
 │   └── research/
-│       └── archimedes_resonance_import.md
 ├── engineering/
-│   ├── __init__.py
+│   ├── dimensional.py
 │   └── resonance.py
 ├── parameters/
 │   ├── master_parameters.yaml
 │   ├── derived_parameters.yaml
+│   ├── dimensional_constraints.yaml
 │   └── nvh_targets.yaml
 ├── scripts/
-│   ├── validate_parameters.py
-│   └── nvh_screen.py
+│   ├── dimensional_audit.py
+│   ├── engine_order_map.py
+│   ├── nvh_screen.py
+│   └── validate_parameters.py
 ├── tests/
+│   ├── test_dimensional.py
 │   └── test_resonance.py
 └── .github/workflows/
     └── validate.yml
 ```
 
-CAD and Blender source directories will be introduced only after the design-definition gates are passed.
+CAD and Blender source directories will be introduced only after their design-definition gates are passed.
 
 ## Modeling maturity
 
@@ -136,7 +174,7 @@ No L4 work is permitted before the relevant system passes L2 and its applicable 
 
 ## First modeling target
 
-The first 3D object will be `V8_MASTER_SKELETON`, not the engine block.
+The first authoritative 3D object will still be `V8_MASTER_SKELETON`, not the engine block.
 
 It must define at minimum:
 
@@ -150,35 +188,40 @@ It must define at minimum:
 - flywheel plane
 - pulley plane
 
-The second target will be the rotating assembly: crankshaft → connecting rods → pistons → wrist pins.
+Phase 1 exists specifically to close the numeric inputs needed to create that skeleton without visual guesswork.
 
-## Current gate
+## Current gates
 
-Before Fusion 360 or Blender work begins, the project must have:
+Completed:
 
 - [x] conceptual blueprint
-- [x] engineering source-of-truth policy
+- [x] source-of-truth policy
 - [x] component hierarchy
 - [x] coordinate convention
-- [x] roadmap
 - [x] technical contract
-- [x] initial parameter registry
-- [x] dimensional-audit framework
+- [x] parameter registry
+- [x] dimensional dependency model
+- [x] executable dimensional audit
 - [x] interface-control framework
 - [x] kinematic framework
 - [x] resonance/NVH architecture
-- [x] initial resonance screening core
-- [x] automated parameter validation
-- [ ] missing dimensions resolved
+- [x] engine-order screening
+- [x] premium acoustic design intent
+- [x] automated engineering tests
+
+Still blocking authoritative CAD:
+
+- [ ] displacement authority mode selected
+- [ ] critical spatial dimensions resolved
+- [ ] piston/deck stack resolved
 - [ ] operating RPM envelope frozen
-- [ ] dominant engine-order map frozen
+- [ ] crank phasing / firing order frozen
 - [ ] master skeleton specification frozen
-- [ ] kinematic crank phasing frozen
-- [ ] modal-analysis plan approved
+- [ ] modal-analysis material/boundary inputs available
 - [ ] design baseline promoted to 1.0.0
 
 ## Rule
 
 > **Geometry is the consequence of the system; premium behavior is the consequence of controlled energy flow.**
 
-Until the dimensional model, skeleton and resonance baseline are approved: **do not model the engine by eye.**
+Until the dimensional model, skeleton and applicable resonance gates are approved: **do not model the engine by eye.**
