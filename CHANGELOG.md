@@ -2,6 +2,51 @@
 
 All notable engineering-baseline changes are recorded here.
 
+## [0.3.0] — 2026-08-25
+
+### Phase transition
+
+- Phase 0 project baseline promoted to `BASELINE_READY`
+- Phase 1 `DIMENSIONAL_RECONSTRUCTION` activated
+- CAD / Blender remain locked
+
+### Added
+
+- authoritative dimensional-relation module
+- executable dimensional audit and candidate CSV export
+- dimensional unit tests
+- `parameters/dimensional_constraints.yaml`
+- explicit displacement-authority decision matrix
+- exact calculations for visible bore/stroke geometry
+- deck-stack relation
+- piston/bore clearance relation
+- compression-ratio dependency relation
+- explicit bank longitudinal-offset unknown
+- package-plane unknowns for flywheel and pulley
+- CI hooks for dimensional audit
+
+### Calculated
+
+Visible blueprint geometry `101.6 mm × 88.9 mm × 8` derives to:
+
+- `5.765925746 L`
+- `351.858377 CID`
+- `720.740718 cc` per cylinder
+- crank radius `44.45 mm`
+- bank half-angle `45°`
+
+Alternative fixed-bore targets were calculated without selecting them:
+
+- exact 350 CID → stroke `88.430465 mm`
+- exact 5.700 L → stroke `87.883546 mm`
+
+### Guardrails
+
+- no displacement authority candidate is locked yet
+- piston operating OD remains unknown until clearance is defined
+- 10.0:1 compression ratio remains unverified until clearance-volume geometry is resolved
+- missing skeleton dimensions remain explicit `UNKNOWN`
+
 ## [0.2.0] — 2026-08-25
 
 ### Added

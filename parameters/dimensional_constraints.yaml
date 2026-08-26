@@ -1,0 +1,90 @@
+schema_version: 1
+baseline: 0.3.0
+status: PHASE_1_DIMENSIONAL_RECONSTRUCTION
+
+source_blueprint:
+  bore_mm: 101.6
+  stroke_mm: 88.9
+  cylinders: 8
+  bank_angle_deg: 90.0
+  displacement_label_l: 5.7
+
+resolved_relations:
+  crank_radius:
+    equation: stroke_mm / 2
+    value_mm: 44.45
+    status: CALCULATED
+  bank_half_angle:
+    equation: bank_angle_deg / 2
+    value_deg: 45.0
+    status: CALCULATED
+  displacement_from_bore_stroke:
+    equation: pi/4 * bore_mm^2 * stroke_mm * cylinders
+    value_l: 5.765925746146245
+    value_cid: 351.8583772020569
+    status: CALCULATED
+  displacement_per_cylinder_cc:
+    value: 720.7407182682807
+    status: CALCULATED
+
+candidate_authority_modes:
+  blueprint_geometry:
+    description: Preserve visible bore and stroke exactly.
+    bore_mm: 101.6
+    stroke_mm: 88.9
+    displacement_l: 5.765925746146245
+    displacement_cid: 351.8583772020569
+    authority: CANDIDATE
+  exact_350_cid_with_bore_fixed:
+    description: Preserve 101.6 mm bore and solve stroke for exactly 350 cubic inches.
+    bore_mm: 101.6
+    stroke_mm: 88.43046525543434
+    displacement_cid: 350.0
+    authority: CANDIDATE
+  exact_5_700_l_with_bore_fixed:
+    description: Preserve 101.6 mm bore and solve stroke for exactly 5.700 L.
+    bore_mm: 101.6
+    stroke_mm: 87.88354590564778
+    displacement_l: 5.7
+    authority: CANDIDATE
+
+stack_constraints:
+  deck_height:
+    equation: crank_radius_mm + connecting_rod_length_mm + piston_compression_height_mm + deck_clearance_mm
+    status: RELATION_LOCKED_INPUTS_UNKNOWN
+  piston_operating_od:
+    equation: bore_mm - piston_to_wall_diametral_clearance_mm
+    status: RELATION_LOCKED_INPUTS_UNKNOWN
+  piston_radial_clearance:
+    equation: piston_to_wall_diametral_clearance_mm / 2
+    status: RELATION_LOCKED_INPUTS_UNKNOWN
+  compression_ratio:
+    equation: (swept_volume_cc + clearance_volume_cc) / clearance_volume_cc
+    status: RELATION_LOCKED_INPUTS_UNKNOWN
+
+critical_unknowns:
+  - cylinder_center_spacing_mm
+  - bank_longitudinal_offset_mm
+  - deck_height_mm
+  - connecting_rod_center_to_center_length_mm
+  - piston_compression_height_mm
+  - piston_to_wall_diametral_clearance_mm
+  - wrist_pin_diameter_mm
+  - main_journal_diameter_mm
+  - rod_journal_diameter_mm
+  - crank_station_spacing_mm
+  - crank_phasing
+  - camshaft_axis_location
+  - head_thickness_mm
+  - chamber_volume_cc
+  - gasket_bore_and_thickness
+  - deck_clearance_mm
+  - piston_crown_volume_cc
+  - flywheel_plane_location_mm
+  - pulley_plane_location_mm
+
+rules:
+  - Unknown dimensions remain UNKNOWN until sourced, derived, measured, or explicitly selected as a design target.
+  - No candidate authority mode becomes LOCKED merely because it produces a convenient displacement label.
+  - A relation may be LOCKED before its numeric inputs are known.
+  - Blender and production CAD remain blocked until DIMENSIONAL_MODEL_VALIDATED and SKELETON_LOCKED gates are satisfied.

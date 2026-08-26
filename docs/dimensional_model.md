@@ -1,8 +1,8 @@
-# Dimensional Model — Audit 0.1
+# Dimensional Model — Audit 0.3
 
-## Purpose
-
-Separate what is visible in the current blueprint from what is mathematically derived and what remains unknown.
+**Phase:** 1 — Dimensional Reconstruction  
+**Status:** ACTIVE / NOT VALIDATED  
+**Primary detail:** `docs/dimensional_reconstruction.md`
 
 ## Reference values
 
@@ -19,56 +19,50 @@ Separate what is visible in the current blueprint from what is mathematically de
 | Bank reference height | 255 mm | REFERENCE |
 | Piston diameter label | 101.6 mm | REFERENCE / AMBIGUOUS |
 | Piston height label | 64.8 mm | REFERENCE |
-| Displacement label | 5.7 L | REFERENCE / NOMINAL |
+| Displacement label | 5.7 L / 350 CID | REFERENCE / NOMINAL |
+| Compression-ratio label | 10.0:1 | REFERENCE / UNVERIFIED |
 
-## Derived checks
+## Derived values from visible bore/stroke
 
-### Crank radius
+- crank radius = `44.45 mm`
+- bank half-angle = `45°`
+- displacement per cylinder = `720.740718 cc`
+- total displacement = `5.765925746 L`
+- total displacement = `351.858377 CID`
 
-`r = stroke / 2`
+## Displacement authority remains open
 
-`r = 88.9 / 2 = 44.45 mm`
+Three mathematically coherent candidate modes are registered in `parameters/dimensional_constraints.yaml`:
 
-### Displacement
+1. preserve blueprint bore/stroke → `5.765926 L / 351.858 CID`;
+2. preserve 101.6 mm bore and target exactly 350 CID → stroke `88.430465 mm`;
+3. preserve 101.6 mm bore and target exactly 5.700 L → stroke `87.883546 mm`.
 
-For eight equal cylinders:
+No mode is `LOCKED` yet.
 
-`V = (π/4) × bore² × stroke × 8`
+## Governing relations now frozen
 
-Using 101.6 mm bore and 88.9 mm stroke:
+- `crank_radius = stroke / 2`
+- `bank_half_angle = bank_angle / 2`
+- `piston_operating_OD = bore - diametral_clearance`
+- `deck_height = crank_radius + rod_length + compression_height + deck_clearance`
+- `CR = (swept_volume + clearance_volume) / clearance_volume`
 
-`V ≈ 5.765926 L`
+These relations may be authoritative even while their unresolved numeric inputs remain `UNKNOWN`.
 
-This differs from the 5.7 L label by about 0.0659 L or 1.16%. For now the label is treated as a nominal family value, not a contradictory hard failure.
+## Critical blockers
 
-### Piston/bore issue
-
-A piston reference diameter of 101.6 mm exactly matching a 101.6 mm bore produces zero nominal radial clearance if both numbers are interpreted as finished operating diameters. That is not acceptable as a locked functional assumption.
-
-Therefore:
-
-- bore remains `REFERENCE`
-- piston diameter remains `REFERENCE / AMBIGUOUS`
-- operating piston OD remains unresolved
-- clearance must be introduced only from a validated design target
-
-## Critical unknowns before skeleton lock
-
+- displacement authority selection
 - cylinder center spacing
-- deck height relative to crank axis
-- crank station spacing
-- main journal diameter
-- rod journal diameter
-- crank phasing
-- connecting-rod center-to-center length
-- piston compression height
-- wrist-pin diameter/location
+- bank longitudinal stagger
+- deck stack closure
+- piston operating clearance
+- wrist-pin geometry
+- crank journal dimensions
+- crank station spacing/phasing
 - camshaft axis location
-- head thickness
-- chamber geometry
-- valve included angle/orientation
-- flywheel plane
-- front pulley plane
+- chamber/gasket/deck/piston-crown volume model
+- flywheel/pulley reference planes
 
 ## Rule
 
