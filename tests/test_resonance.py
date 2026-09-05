@@ -72,7 +72,9 @@ class ResonanceCoreTests(unittest.TestCase):
         self.assertAlmostEqual(modal_separation_percent(90.0, 100.0), 10.0)
 
     def test_modal_exclusion_band(self):
-        self.assertEqual(modal_exclusion_band(400.0, 10.0), (360.0, 440.00000000000006))
+        low_hz, high_hz = modal_exclusion_band(400.0, 10.0)
+        self.assertAlmostEqual(low_hz, 360.0)
+        self.assertAlmostEqual(high_hz, 440.0)
 
 
 if __name__ == "__main__":
