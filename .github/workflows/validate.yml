@@ -24,6 +24,9 @@ jobs:
       - name: Validate master parameters
         run: python scripts/validate_parameters.py
 
+      - name: Validate material provenance registry
+        run: python scripts/validate_materials.py
+
       - name: Run engineering unit tests
         run: python -m unittest discover -s tests -p "test_*.py"
 
@@ -32,6 +35,9 @@ jobs:
 
       - name: Generate engine-order baseline
         run: python scripts/engine_order_map.py --csv validation/engine_order_map.csv
+
+      - name: Run resonance geometry synthesis smoke test
+        run: python scripts/resonance_geometry_design.py 400 --order 4
 
       - name: Run NVH baseline screen
         run: python scripts/nvh_screen.py
