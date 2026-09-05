@@ -1,6 +1,6 @@
 # V8 ENGINE — Engineering Roadmap
 
-**Baseline:** 0.4.0  
+**Baseline:** 0.5.0  
 **Current phase:** Phase 1 — Dimensional Reconstruction  
 **3D modeling:** LOCKED
 
@@ -26,7 +26,7 @@ Completed:
 - [x] Critical unknown register established
 - [x] Phase/gate ownership defined
 
-The unresolved dimensions, crank phasing, RPM envelope and skeleton geometry are intentionally carried into their owning downstream phases instead of blocking the project-baseline freeze.
+The unresolved dimensions, firing sequence, RPM envelope and skeleton geometry are intentionally carried into their owning downstream phases instead of blocking the project-baseline freeze.
 
 **Exit gate:** `BASELINE_READY` — PASS
 
@@ -38,7 +38,6 @@ Completed:
 
 - [x] bore/stroke/displacement audit
 - [x] exact displacement derived from visible geometry
-- [x] displacement authority alternatives calculated
 - [x] blueprint bore/stroke selected as `DEVELOPMENT_AUTHORITY`
 - [x] production lock explicitly withheld
 - [x] crank-radius relation frozen
@@ -48,6 +47,8 @@ Completed:
 - [x] compression-ratio dependency relation frozen
 - [x] executable dimensional audit added
 - [x] dimensional unit tests added
+- [x] 90° cross-plane crank selected as development direction
+- [x] flat-plane retained as future variant architecture
 
 Still required:
 
@@ -86,11 +87,12 @@ Completed:
 - [x] inverse Helmholtz geometry relations
 - [x] resonance geometry synthesis CLI
 - [x] modal exclusion-band screening helper
+- [x] cross-plane vs flat-plane NVH trade direction established
 
 Still required:
 
 - [ ] freeze operating RPM range
-- [ ] freeze crank phasing/firing order
+- [ ] freeze cylinder-to-throw mapping and firing order
 - [ ] add rotating/reciprocating force-order amplitudes
 - [ ] add valvetrain event families
 - [ ] add accessory speed/blade/tooth-pass families
@@ -115,20 +117,43 @@ All entities must be parameter-driven.
 
 The skeleton may not be frozen until Phase 1 supplies every required spatial input.
 
+The crank architecture may inform skeleton interfaces, but unresolved cylinder-to-throw mapping, crank stations, bank stagger and package planes still block the authoritative skeleton.
+
 **Exit gate:** `SKELETON_LOCKED`
 
-## Phase 3 — Rotating assembly
+## Phase 3 — Rotating assembly 🔄 PREPARATION
 
-Build and validate:
+Development direction:
+
+- [x] 90° cross-plane crank selected for the first premium V8 baseline
+- [x] throw phase families defined: `0° / 90° / 180° / 270°`
+- [x] executable zero-offset slider-crank relation implemented
+- [x] TDC / BDC / stroke / 360° periodicity tests implemented
+- [x] evenly firing four-stroke V8 event cadence derived as `90°`
+
+Still required before authoritative rotating geometry:
+
+- [ ] connecting-rod center-to-center length
+- [ ] cylinder-to-throw mapping
+- [ ] rod-journal pairing strategy
+- [ ] firing order
+- [ ] numeric cylinder mapping, if numeric IDs are adopted
+- [ ] crank station spacing
+- [ ] bank longitudinal stagger
+- [ ] main / rod journal diameters
+- [ ] counterweight strategy
+- [ ] rotating / reciprocating mass model
+- [ ] torsional excitation map
+- [ ] damper strategy
+
+Build and validate later:
 
 1. crankshaft
 2. connecting rods
 3. pistons
 4. wrist pins
 
-Run a complete 0°–720° crank cycle without contradictory constraints, discontinuities, or unintended interference.
-
-Add a torsional-excitation map before freezing crank geometry.
+Run a complete 0°–720° crank cycle without contradictory constraints, discontinuities or unintended interference.
 
 **Exit gate:** `ROTATING_ASSEMBLY_PASS`
 
@@ -153,7 +178,7 @@ Before detail freeze:
 - identify antinodes that may require ribs, local stiffness changes or mass redistribution;
 - record boundary conditions, mesh evidence and damping confidence.
 
-The material provenance schema and validator are already established in baseline 0.4.0; numeric material properties remain intentionally unresolved until sourced.
+The material provenance schema and validator already exist; numeric material properties remain intentionally unresolved until sourced.
 
 **Exit gate:** `SHORT_BLOCK_STRUCTURAL_PASS`
 
@@ -218,6 +243,7 @@ This phase explicitly includes:
 - desired acoustic signature
 - unwanted drone bands
 - frequency-to-geometry screening candidates generated before CAD freeze
+- bank-specific pulse analysis after firing order is frozen
 
 **Exit gate:** `AIRFLOW_GEOMETRY_PASS`
 
@@ -311,11 +337,13 @@ DIMENSIONAL RECONSTRUCTION ← CURRENT
   ↘
    NVH BASELINE / RESONANCE SYNTHESIS
   ↓
+CROSS-PLANE DEVELOPMENT DIRECTION ✅
+  ↓
+CYLINDER ↔ THROW MAPPING / FIRING ORDER
+  ↓
 MASTER SKELETON
   ↓
-CRANKSHAFT
-  ↓
-ROD / PISTON
+ROTATING ASSEMBLY
   ↓
 BLOCK + SOURCED MATERIAL SET + MODAL STUDY
   ↓
