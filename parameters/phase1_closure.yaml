@@ -1,0 +1,112 @@
+schema_version: 1
+baseline: 0.7.0
+status: PHASE_1_NUMERIC_CLOSURE
+
+principle: >-
+  A relation may be accepted before its numeric inputs are known, but Phase 1
+  cannot hand off to the authoritative master skeleton while any required
+  placement input remains UNKNOWN or unsupported by provenance.
+
+required_numeric_handoff:
+  cylinder_center_spacing_mm:
+    status: UNKNOWN
+    relation: bore_mm + inter_cylinder_bridge_mm
+    source_requirement: DERIVED_OR_SOURCED
+  inter_cylinder_bridge_mm:
+    status: UNKNOWN
+    source_requirement: DESIGN_TARGET_OR_SOURCED
+  left_bank_front_cylinder_y_mm:
+    status: UNKNOWN
+    source_requirement: DATUM_DECISION
+  bank_longitudinal_offset_mm:
+    status: UNKNOWN
+    source_requirement: ARCHITECTURE_DECISION
+  bore_axis_offset_mode:
+    status: DECISION_PENDING
+    allowed: [ZERO_OFFSET, NONZERO_OFFSET]
+  bore_axis_offset_mm:
+    status: UNKNOWN
+    required_when: bore_axis_offset_mode == NONZERO_OFFSET
+  deck_height_mm:
+    status: UNKNOWN
+    relation: crank_radius_mm + rod_length_mm + compression_height_mm + deck_clearance_mm
+  connecting_rod_center_to_center_length_mm:
+    status: UNKNOWN
+    source_requirement: DESIGN_TARGET_OR_SOURCED
+  piston_compression_height_mm:
+    status: UNKNOWN
+    source_requirement: DESIGN_TARGET_OR_SOURCED
+  deck_clearance_mm:
+    status: UNKNOWN
+    source_requirement: DESIGN_TARGET_OR_SOURCED
+  piston_to_wall_diametral_clearance_mm:
+    status: UNKNOWN
+    source_requirement: MATERIAL_THERMAL_DESIGN
+  crank_station_positions_mm:
+    status: UNKNOWN
+    source_requirement: CRANK_ROD_ARCHITECTURE
+  main_journal_diameter_mm:
+    status: UNKNOWN
+    source_requirement: LOAD_DURABILITY_DESIGN
+  rod_journal_diameter_mm:
+    status: UNKNOWN
+    source_requirement: LOAD_DURABILITY_DESIGN
+  cam_axis_x_mm:
+    status: UNKNOWN
+    source_requirement: PACKAGING_VALVETRAIN_DESIGN
+  cam_axis_z_mm:
+    status: UNKNOWN
+    source_requirement: PACKAGING_VALVETRAIN_DESIGN
+  flywheel_plane_y_mm:
+    status: UNKNOWN
+    source_requirement: PACKAGE_INTERFACE
+  pulley_plane_y_mm:
+    status: UNKNOWN
+    source_requirement: PACKAGE_INTERFACE
+
+cross_domain_dependencies:
+  operating_rpm_envelope:
+    status: UNKNOWN
+    owner_issue: 8
+    blocks:
+      - authoritative_engine_order_map
+      - piston_speed_screen
+      - valvetrain_speed_screen
+      - torsional_bandwidth
+  cylinder_to_throw_mapping:
+    status: UNKNOWN
+    owner_issue: 3
+    blocks:
+      - deterministic_720_degree_event_table
+      - crankpin_station_mapping
+      - bank_specific_exhaust_pulse_map
+  firing_order:
+    status: UNKNOWN
+    owner_issue: 3
+    blocks:
+      - combustion_event_table
+      - bank_specific_pulse_sequence
+      - torsional_excitation_sequence
+  sourced_material_set:
+    status: UNKNOWN
+    owner_issue: 9
+    blocks:
+      - piston_clearance_thermal_closure
+      - credible_modal_fea
+
+phase1_exit_gate:
+  name: DIMENSIONAL_MODEL_VALIDATED
+  requires:
+    - all required_numeric_handoff entries resolved or explicitly proven not applicable
+    - provenance/status attached to every accepted numeric input
+    - dimensional relations internally consistent
+    - piston/bore clearance thermally qualified
+    - skeleton generator can place every required datum without manual offsets
+
+rules:
+  - Do not replace UNKNOWN values with solver defaults.
+  - Do not infer crankpin stations from cylinder center positions.
+  - Do not silently set bore-axis offset to zero.
+  - Do not lock piston clearance without material and temperature assumptions.
+  - Development targets are allowed only when labeled DESIGN_TARGET and accompanied by rationale.
+  - CAD and Blender remain locked until DIMENSIONAL_MODEL_VALIDATED and SKELETON_LOCKED pass.
