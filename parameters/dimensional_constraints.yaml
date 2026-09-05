@@ -1,5 +1,5 @@
-schema_version: 1
-baseline: 0.3.0
+schema_version: 2
+baseline: 0.4.0
 status: PHASE_1_DIMENSIONAL_RECONSTRUCTION
 
 source_blueprint:
@@ -8,6 +8,16 @@ source_blueprint:
   cylinders: 8
   bank_angle_deg: 90.0
   displacement_label_l: 5.7
+
+development_authority:
+  mode: PRESERVE_BLUEPRINT_GEOMETRY
+  status: DEVELOPMENT_AUTHORITY
+  production_locked: false
+  rationale: Explicit bore/stroke dimensions have higher geometric specificity than the rounded 5.7 L / 350 CID labels. Use them to drive Phase 1 calculations while preserving the right to revise production geometry after durability, thermal, emissions, packaging and NVH evidence.
+  bore_mm: 101.6
+  stroke_mm: 88.9
+  calculated_displacement_l: 5.765925746146245
+  calculated_displacement_cid: 351.8583772020569
 
 resolved_relations:
   crank_radius:
@@ -34,19 +44,19 @@ candidate_authority_modes:
     stroke_mm: 88.9
     displacement_l: 5.765925746146245
     displacement_cid: 351.8583772020569
-    authority: CANDIDATE
+    authority: DEVELOPMENT_AUTHORITY
   exact_350_cid_with_bore_fixed:
     description: Preserve 101.6 mm bore and solve stroke for exactly 350 cubic inches.
     bore_mm: 101.6
     stroke_mm: 88.43046525543434
     displacement_cid: 350.0
-    authority: CANDIDATE
+    authority: ALTERNATIVE_CANDIDATE
   exact_5_700_l_with_bore_fixed:
     description: Preserve 101.6 mm bore and solve stroke for exactly 5.700 L.
     bore_mm: 101.6
     stroke_mm: 87.88354590564778
     displacement_l: 5.7
-    authority: CANDIDATE
+    authority: ALTERNATIVE_CANDIDATE
 
 stack_constraints:
   deck_height:
@@ -85,6 +95,7 @@ critical_unknowns:
 
 rules:
   - Unknown dimensions remain UNKNOWN until sourced, derived, measured, or explicitly selected as a design target.
-  - No candidate authority mode becomes LOCKED merely because it produces a convenient displacement label.
+  - DEVELOPMENT_AUTHORITY permits deterministic Phase 1 calculations but is not a production manufacturing lock.
   - A relation may be LOCKED before its numeric inputs are known.
+  - Piston operating OD must not be inferred from the blueprint piston diameter label.
   - Blender and production CAD remain blocked until DIMENSIONAL_MODEL_VALIDATED and SKELETON_LOCKED gates are satisfied.
