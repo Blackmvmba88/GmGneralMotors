@@ -1,5 +1,5 @@
 schema_version: 1
-baseline: 0.5.0
+baseline: 0.6.0
 project: GmGneralMotors_V8
 phase: PHASE_1_DIMENSIONAL_RECONSTRUCTION
 
@@ -42,12 +42,30 @@ cylinder:
     status: REFERENCE
     source: current_blueprint
     authority_scope: DEVELOPMENT_AUTHORITY
+  inter_cylinder_bridge_mm:
+    value: null
+    status: UNKNOWN
   center_spacing_mm:
+    value: null
+    status: UNKNOWN
+    relation: bore_mm + inter_cylinder_bridge_mm
+  left_bank_front_center_y_mm:
     value: null
     status: UNKNOWN
   bank_longitudinal_offset_mm:
     value: null
     status: UNKNOWN
+    convention: right_bank_front_center_y - left_bank_front_center_y
+  bore_axis_offset_mode:
+    value: null
+    status: DECISION_PENDING
+    allowed:
+      - ZERO_OFFSET
+      - NONZERO_OFFSET
+  bore_axis_offset_mm:
+    value: null
+    status: UNKNOWN
+    note: Signed cross-sectional offset from the crank-center reference under the selected offset convention; do not assume zero until the mode is selected.
 
 engine_envelope:
   width_mm:
@@ -75,6 +93,7 @@ bank_reference:
   deck_height_mm:
     value: null
     status: UNKNOWN
+    relation: crank_radius_mm + connecting_rod_length_mm + piston_compression_height_mm + deck_clearance_mm
   deck_clearance_mm:
     value: null
     status: UNKNOWN
@@ -113,6 +132,12 @@ connecting_rod:
   big_end_bore_mm:
     value: null
     status: UNKNOWN
+  big_end_width_mm:
+    value: null
+    status: UNKNOWN
+  inter_rod_side_clearance_mm:
+    value: null
+    status: UNKNOWN
   small_end_bore_mm:
     value: null
     status: UNKNOWN
@@ -133,6 +158,9 @@ crankshaft:
   crank_station_spacing_mm:
     value: null
     status: UNKNOWN
+  crank_station_positions_y_mm:
+    value: []
+    status: UNKNOWN
   phasing:
     value: null
     status: UNKNOWN
@@ -143,10 +171,11 @@ crankshaft:
     authority_scope: DEVELOPMENT_DIRECTION
 
 camshaft:
+  axis_direction:
+    value: [0.0, 1.0, 0.0]
+    status: VERIFIED
+    authority_scope: OHV_DEVELOPMENT_RELATION
   axis_offset_x_mm:
-    value: null
-    status: UNKNOWN
-  axis_offset_y_mm:
     value: null
     status: UNKNOWN
   axis_offset_z_mm:
@@ -179,9 +208,11 @@ package_planes:
   flywheel_plane_y_mm:
     value: null
     status: UNKNOWN
+    normal: [0.0, 1.0, 0.0]
   pulley_plane_y_mm:
     value: null
     status: UNKNOWN
+    normal: [0.0, 1.0, 0.0]
 
 nominal:
   displacement_label_L:
