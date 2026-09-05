@@ -1,5 +1,5 @@
 schema_version: 1
-baseline: 0.3.0
+baseline: 0.4.0
 project: GmGneralMotors_V8
 phase: PHASE_1_DIMENSIONAL_RECONSTRUCTION
 
@@ -36,10 +36,12 @@ cylinder:
     value: 101.6
     status: REFERENCE
     source: current_blueprint
+    authority_scope: DEVELOPMENT_AUTHORITY
   stroke_mm:
     value: 88.9
     status: REFERENCE
     source: current_blueprint
+    authority_scope: DEVELOPMENT_AUTHORITY
   center_spacing_mm:
     value: null
     status: UNKNOWN
@@ -187,8 +189,11 @@ nominal:
 
 dimensional_authority:
   selected_mode:
-    value: null
-    status: DECISION_PENDING
+    value: blueprint_geometry
+    status: VERIFIED
+    authority_scope: DEVELOPMENT
+    production_locked: false
+    note: Explicit bore/stroke dimensions govern Phase 1 calculations; nominal displacement labels do not override them.
     allowed:
       - blueprint_geometry
       - exact_350_cid_with_bore_fixed
