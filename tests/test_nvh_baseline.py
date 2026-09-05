@@ -26,6 +26,22 @@ class NVHBaselineTests(unittest.TestCase):
         self.assertEqual(len(match), 1)
         self.assertAlmostEqual(match[0].frequency_hz, 400.0, places=6)
 
+    def test_order_map_includes_unaligned_maximum_rpm(self):
+        targets = {
+            **self.targets,
+            "operating_envelope": {
+                **self.targets["operating_envelope"],
+                "rpm_min": {"value": 650},
+                "rpm_max": {"value": 7000},
+                "screening_step": {"value": 100},
+            },
+        }
+
+        rows = generate_order_map(targets)
+        maximum_rows = [row for row in rows if row.rpm == 7000]
+
+        self.assertEqual(len(maximum_rows), len(self.targets["engine_orders"]["tracked_orders"]["value"]))
+
     def test_highest_tracked_screening_line(self):
         self.assertAlmostEqual(maximum_tracked_excitation_hz(self.targets), 933.3333333333, places=6)
 
