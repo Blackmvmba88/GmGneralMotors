@@ -2,6 +2,39 @@
 
 All notable engineering-baseline changes are recorded here.
 
+## [0.5.0] — 2026-09-04
+
+### Development direction
+
+- selected `CROSS_PLANE_90_DEG` as the current crank development direction
+- explicitly kept production lock disabled
+- retained flat-plane as a future high-RPM variant path
+- preserved bank-local cylinder IDs `L1–L4` / `R1–R4`
+- left cylinder-to-throw mapping and firing order unresolved until they are mathematically coherent
+
+### Added
+
+- `parameters/crank_architecture.yaml`
+- cross-plane vs flat-plane trade study
+- deterministic slider-crank kinematics core
+- cross-plane throw-phase family helper
+- piston travel-from-TDC relation
+- kinematics unit tests for TDC, BDC, stroke and 360° periodicity
+- kinematics documentation tied to the 720° four-stroke cycle
+
+### Calculated / frozen at development level
+
+- cross-plane throw phase families: `0° / 90° / 180° / 270°`
+- evenly firing V8 event cadence: `90°` crank per combustion event
+
+### Guardrails
+
+- no rod length was invented
+- no cylinder-to-throw mapping was invented
+- no firing order was frozen
+- crank architecture remains a development direction rather than production authority
+- CAD and Blender remain locked
+
 ## [0.4.0] — 2026-09-04
 
 ### Advanced
