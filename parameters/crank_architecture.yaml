@@ -1,0 +1,82 @@
+schema_version: 1
+baseline: 0.5.0
+status: DEVELOPMENT_DIRECTION
+
+selection:
+  architecture:
+    value: CROSS_PLANE_90_DEG
+    status: DEVELOPMENT_DIRECTION
+    production_locked: false
+    rationale:
+      - prioritize controlled premium NVH and smoother low/mid-frequency behavior
+      - retain 90-degree V8 architecture compatibility
+      - accept higher crank counterweight/inertia burden as a development tradeoff
+      - preserve flat-plane as a future high-rpm variant path
+
+candidate_comparison:
+  cross_plane_90_deg:
+    crank_throw_phases_deg: [0, 90, 180, 270]
+    strengths:
+      - premium_nvh_direction
+      - reduced_second_order_v8_shake_vs_flat_plane
+      - strong_low_mid_frequency_character
+      - broad_luxury_performance_fit
+    costs:
+      - greater_counterweight_requirement
+      - greater_rotating_inertia
+      - more_complex_exhaust_pulse_grouping
+    status: PREFERRED_DEVELOPMENT_DIRECTION
+
+  flat_plane_180_deg:
+    crank_throw_phases_deg: [0, 180, 0, 180]
+    strengths:
+      - lower_crank_inertia_potential
+      - simpler_exhaust_pulse_regularization
+      - high_rpm_response_potential
+    costs:
+      - greater_second_order_vibration_burden
+      - higher_structural_nvh_demand
+      - less_aligned_with_current_premium_nvh_priority
+    status: RETAINED_VARIANT_CANDIDATE
+
+cylinder_identity:
+  development_scheme:
+    left_bank: [L1, L2, L3, L4]
+    right_bank: [R1, R2, R3, R4]
+    status: LOCKED_FOR_DEVELOPMENT
+  numeric_mapping:
+    value: null
+    status: UNKNOWN
+
+crank_throw_assignment:
+  T0:
+    phase_deg: 0
+    cylinders: []
+    status: UNASSIGNED
+  T90:
+    phase_deg: 90
+    cylinders: []
+    status: UNASSIGNED
+  T180:
+    phase_deg: 180
+    cylinders: []
+    status: UNASSIGNED
+  T270:
+    phase_deg: 270
+    cylinders: []
+    status: UNASSIGNED
+
+firing_order:
+  value: null
+  status: UNKNOWN
+
+combustion_event_spacing_deg:
+  value: 90
+  status: CALCULATED
+  note: Evenly firing four-stroke V8 target; actual cylinder sequence remains unresolved.
+
+guardrails:
+  - Cross-plane is a development direction, not a production lock.
+  - Do not assign a firing order until cylinder numbering and journal mapping are coherent.
+  - Do not infer cylinder-to-throw mapping from external manufacturer numbering.
+  - Flat-plane remains a valid future variant architecture.
