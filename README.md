@@ -3,7 +3,7 @@
 > **Status:** PHASE 1 — DIMENSIONAL RECONSTRUCTION  
 > **3D modeling:** LOCKED  
 > **Blender:** LOCKED  
-> **Baseline:** v0.3.0
+> **Baseline:** v0.4.0
 
 This repository is the engineering source of truth for a modular, parametric V8 engine digital master. The goal is not to draw an engine by eye; it is to define enough geometry, interfaces, parameters, kinematics, resonance behavior, energy paths and validation rules that the engine becomes a reproducible consequence of the system.
 
@@ -63,15 +63,19 @@ Derived exactly from those inputs:
 - displacement = `351.858377 CID`
 - swept volume per cylinder = `720.740718 cc`
 
-Therefore the visible `5.7 L / 350 CID` label remains nominal/reference until a displacement authority mode is selected.
+### Development dimensional authority
 
-Three candidate interpretations are tracked:
+Phase 1 now uses the explicit blueprint geometry `101.6 × 88.9 mm` as **DEVELOPMENT_AUTHORITY**. The visible `5.7 L / 350 CID` values are treated as nominal labels.
 
-1. preserve blueprint geometry: `101.6 × 88.9 mm`;
-2. preserve bore and target exactly `350 CID`: stroke `88.430465 mm`;
-3. preserve bore and target exactly `5.700 L`: stroke `87.883546 mm`.
+This is deliberately **not** a production manufacturing lock. Bore/stroke can still be revised later when durability, thermal, emissions, packaging, combustion and NVH evidence exists.
 
-No candidate is silently promoted to `LOCKED`.
+Alternative interpretations remain traceable:
+
+1. development authority: `101.6 × 88.9 mm` → `5.765925746 L / 351.858377 CID`;
+2. exact `350 CID` with bore fixed → stroke `88.430465 mm`;
+3. exact `5.700 L` with bore fixed → stroke `87.883546 mm`.
+
+Piston operating OD remains unresolved until a real piston-to-wall clearance is defined.
 
 See:
 
@@ -110,15 +114,43 @@ The project imports the **classical engineering layer** of `Blackmvmba88/archime
 
 The quantum-matter modules remain a separate research domain. They are not used as evidence for a combustion-engine performance mechanism. Premium resonance claims must be backed by measurable classical structural dynamics, acoustics, fluid dynamics and test data.
 
+### Frequency → geometry screening
+
+The engineering layer can now invert several resonance relations before CAD:
+
+- target frequency → engine-order crossing RPM;
+- target frequency → quarter-wave effective length;
+- target frequency + neck geometry → Helmholtz cavity volume;
+- target frequency + cavity geometry → Helmholtz neck area;
+- natural frequency → provisional modal exclusion band.
+
+These outputs are design candidates only. They do not become approved geometry until package, CFD/acoustic, structural, thermal, fatigue, manufacturing and physical validation gates pass.
+
 See:
 
 - `docs/nvh_resonance_architecture.md`
 - `docs/nvh_engine_order_map.md`
 - `docs/premium_acoustic_signature.md`
 - `docs/structural_modal_analysis_plan.md`
+- `docs/resonance_geometry_synthesis.md`
 - `docs/research/archimedes_resonance_import.md`
 - `parameters/nvh_targets.yaml`
 - `engineering/resonance.py`
+- `scripts/resonance_geometry_design.py`
+
+## Material / FEA provenance policy
+
+Authoritative simulation may not use anonymous `aluminum`, `steel`, `iron` or similar generic material labels.
+
+`parameters/materials.yaml` now defines the property and provenance contract required before the first credible modal/thermal model. Numeric properties must identify source, revision, temperature and status; damping additionally requires confidence metadata.
+
+No material constants have been invented yet. Component assignments remain `UNKNOWN` until sourced candidates are reviewed.
+
+See:
+
+- `parameters/materials.yaml`
+- `docs/material_selection.md`
+- `scripts/validate_materials.py`
 
 ## Repository map
 
@@ -137,6 +169,8 @@ See:
 │   ├── nvh_engine_order_map.md
 │   ├── premium_acoustic_signature.md
 │   ├── structural_modal_analysis_plan.md
+│   ├── resonance_geometry_synthesis.md
+│   ├── material_selection.md
 │   ├── validation.md
 │   └── research/
 ├── engineering/
@@ -146,11 +180,14 @@ See:
 │   ├── master_parameters.yaml
 │   ├── derived_parameters.yaml
 │   ├── dimensional_constraints.yaml
+│   ├── materials.yaml
 │   └── nvh_targets.yaml
 ├── scripts/
 │   ├── dimensional_audit.py
 │   ├── engine_order_map.py
 │   ├── nvh_screen.py
+│   ├── resonance_geometry_design.py
+│   ├── validate_materials.py
 │   └── validate_parameters.py
 ├── tests/
 │   ├── test_dimensional.py
@@ -202,22 +239,26 @@ Completed:
 - [x] parameter registry
 - [x] dimensional dependency model
 - [x] executable dimensional audit
+- [x] development displacement authority selected
 - [x] interface-control framework
 - [x] kinematic framework
 - [x] resonance/NVH architecture
 - [x] engine-order screening
+- [x] inverse resonance geometry screening
 - [x] premium acoustic design intent
+- [x] material provenance contract
 - [x] automated engineering tests
 
 Still blocking authoritative CAD:
 
-- [ ] displacement authority mode selected
 - [ ] critical spatial dimensions resolved
 - [ ] piston/deck stack resolved
+- [ ] piston operating clearance resolved
 - [ ] operating RPM envelope frozen
 - [ ] crank phasing / firing order frozen
 - [ ] master skeleton specification frozen
-- [ ] modal-analysis material/boundary inputs available
+- [ ] sourced material properties selected for modal analysis
+- [ ] modal-analysis boundary inputs available
 - [ ] design baseline promoted to 1.0.0
 
 ## Rule
