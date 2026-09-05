@@ -1,5 +1,5 @@
 schema_version: 1
-baseline: 0.4.0
+baseline: 0.5.0
 project: GmGneralMotors_V8
 phase: PHASE_1_DIMENSIONAL_RECONSTRUCTION
 
@@ -118,6 +118,12 @@ connecting_rod:
     status: UNKNOWN
 
 crankshaft:
+  architecture:
+    value: CROSS_PLANE_90_DEG
+    status: VERIFIED
+    authority_scope: DEVELOPMENT_DIRECTION
+    production_locked: false
+    source: project_trade_study
   main_journal_diameter_mm:
     value: null
     status: UNKNOWN
@@ -130,6 +136,11 @@ crankshaft:
   phasing:
     value: null
     status: UNKNOWN
+    note: Throw architecture selected; cylinder-to-throw mapping and firing order are not frozen.
+  throw_phase_families_deg:
+    value: [0.0, 90.0, 180.0, 270.0]
+    status: VERIFIED
+    authority_scope: DEVELOPMENT_DIRECTION
 
 camshaft:
   axis_offset_x_mm:
