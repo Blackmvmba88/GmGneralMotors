@@ -1,6 +1,6 @@
 # Phase 1 Numeric Closure Strategy
 
-**Baseline:** 0.7.0  
+**Baseline:** 0.6.0  
 **Status:** ACTIVE  
 **Gate:** `DIMENSIONAL_MODEL_VALIDATED`
 
