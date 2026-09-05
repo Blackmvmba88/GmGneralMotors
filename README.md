@@ -14,6 +14,8 @@ MASTER PARAMETERS
       ↓
 DIMENSIONAL / SPATIAL RELATIONS
       ↓
+PHASE 1 NUMERIC CLOSURE
+      ↓
 MASTER SKELETON
       ↓
 COMPONENT GEOMETRY
@@ -100,9 +102,9 @@ Tests verify TDC, BDC=stroke, 360° mechanical periodicity and throw-phase behav
 
 Cylinder-to-throw mapping and firing order remain unresolved.
 
-## Master-skeleton relation layer — NEW in v0.6.0
+## Master-skeleton relation layer
 
-The project now separates **geometric relations** from **missing numeric dimensions**.
+The project separates **geometric relations** from **missing numeric dimensions**.
 
 For bank angle `β`, with `α = β/2`:
 
@@ -136,29 +138,35 @@ The caller owns `P_axis_base`; therefore the system does **not** silently assume
 For the current coordinate convention:
 
 ```text
-crank axis direction        = (0, 1, 0)
-flywheel/pulley plane normal= (0, 1, 0)
-engine center-plane normal  = (1, 0, 0)
-cam axis direction          = (0, 1, 0)  # OHV development relation
+crank axis direction         = (0, 1, 0)
+flywheel/pulley plane normal = (0, 1, 0)
+engine center-plane normal   = (1, 0, 0)
+cam axis direction           = (0, 1, 0)
 ```
 
-### Important separations
+Cylinder longitudinal centers are **not** crankpin station planes. Bank stagger and bore-axis offset remain explicit inputs.
 
-Cylinder longitudinal centers are **not** crankpin station planes. Crank stations wait for rod-journal pairing, bank stagger and cylinder-to-throw mapping.
+## Phase 1 numeric closure ledger
 
-Bank stagger is explicit. If side-by-side rods on common pins are retained, rod-center separation can inform stagger; other rod architectures require another relation.
+The remaining work is now treated as a finite closure problem instead of an open-ended modeling exercise.
 
-Bore-axis offset is explicit: zero-offset versus deliberate offset remains a design decision.
+`parameters/phase1_closure.yaml` classifies the remaining blockers into:
 
-The relation layer is executable, but **CAD stays locked until the numeric handoff is complete**.
+- skeleton placement;
+- piston/deck stack;
+- crank/rotating system;
+- NVH authority.
+
+`scripts/phase1_gate_report.py` reports the unresolved set. Raw `REFERENCE`, `UNKNOWN`, `DECISION_PENDING` and `SCREENING_ONLY` states do not pass an authoritative geometry gate.
+
+Accepted closure states are `DESIGN_TARGET`, `CALCULATED`, `VERIFIED`, and `LOCKED`, each with provenance requirements.
 
 See:
 
-- `parameters/skeleton_relations.yaml`
-- `engineering/skeleton.py`
-- `tests/test_skeleton.py`
-- `docs/skeleton_spec.md`
-- `docs/phase1_handoff.md`
+- `parameters/phase1_closure.yaml`
+- `engineering/phase1_gate.py`
+- `scripts/phase1_gate_report.py`
+- `docs/phase1_numeric_closure.md`
 
 ## Resonance / premium NVH
 
@@ -184,56 +192,6 @@ Authoritative simulation may not use anonymous `aluminum`, `steel`, `iron` or si
 
 Every numeric material property must carry source, revision, temperature and status; damping additionally requires confidence metadata. No material constants have been invented yet.
 
-## Repository map
-
-```text
-.
-├── README.md
-├── ROADMAP.md
-├── CHANGELOG.md
-├── V8_ENGINE_TECHNICAL_CONTRACT.md
-├── docs/
-│   ├── crank_architecture_trade.md
-│   ├── dimensional_model.md
-│   ├── dimensional_reconstruction.md
-│   ├── skeleton_spec.md
-│   ├── phase1_handoff.md
-│   ├── kinematics.md
-│   ├── nvh_resonance_architecture.md
-│   ├── nvh_engine_order_map.md
-│   ├── premium_acoustic_signature.md
-│   ├── structural_modal_analysis_plan.md
-│   ├── resonance_geometry_synthesis.md
-│   ├── material_selection.md
-│   └── research/
-├── engineering/
-│   ├── dimensional.py
-│   ├── kinematics.py
-│   ├── skeleton.py
-│   └── resonance.py
-├── parameters/
-│   ├── master_parameters.yaml
-│   ├── crank_architecture.yaml
-│   ├── dimensional_constraints.yaml
-│   ├── skeleton_relations.yaml
-│   ├── materials.yaml
-│   └── nvh_targets.yaml
-├── scripts/
-│   ├── dimensional_audit.py
-│   ├── engine_order_map.py
-│   ├── nvh_screen.py
-│   ├── resonance_geometry_design.py
-│   ├── validate_materials.py
-│   └── validate_parameters.py
-├── tests/
-│   ├── test_dimensional.py
-│   ├── test_kinematics.py
-│   ├── test_skeleton.py
-│   └── test_resonance.py
-└── .github/workflows/
-    └── validate.yml
-```
-
 ## Current gates
 
 Completed:
@@ -243,7 +201,8 @@ Completed:
 - [x] development bore/stroke authority
 - [x] cross-plane crank development direction
 - [x] executable slider-crank kinematics
-- [x] executable master-skeleton **relation layer**
+- [x] executable master-skeleton relation layer
+- [x] explicit Phase 1 numeric closure ledger / gate reporter
 - [x] interface-control framework
 - [x] resonance/NVH architecture and engine-order screening
 - [x] inverse resonance geometry screening
