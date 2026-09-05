@@ -1,6 +1,6 @@
 # V8 ENGINE — Engineering Roadmap
 
-**Baseline:** 0.3.0  
+**Baseline:** 0.4.0  
 **Current phase:** Phase 1 — Dimensional Reconstruction  
 **3D modeling:** LOCKED
 
@@ -34,11 +34,13 @@ The unresolved dimensions, crank phasing, RPM envelope and skeleton geometry are
 
 Convert the reference blueprint into a coherent dimensional system.
 
-Completed in baseline 0.3.0:
+Completed:
 
 - [x] bore/stroke/displacement audit
 - [x] exact displacement derived from visible geometry
 - [x] displacement authority alternatives calculated
+- [x] blueprint bore/stroke selected as `DEVELOPMENT_AUTHORITY`
+- [x] production lock explicitly withheld
 - [x] crank-radius relation frozen
 - [x] bank half-angle relation frozen
 - [x] piston/bore clearance relation frozen
@@ -49,7 +51,6 @@ Completed in baseline 0.3.0:
 
 Still required:
 
-- [ ] select displacement authority mode
 - [ ] close overall envelope interpretation
 - [ ] define cylinder center spacing
 - [ ] define longitudinal bank stagger
@@ -80,6 +81,11 @@ Completed:
 - [x] premium acoustic-signature design intent
 - [x] structural modal/harmonic analysis plan
 - [x] intake/exhaust resonance model families identified
+- [x] inverse engine-order crossing relation
+- [x] inverse quarter-wave geometry relation
+- [x] inverse Helmholtz geometry relations
+- [x] resonance geometry synthesis CLI
+- [x] modal exclusion-band screening helper
 
 Still required:
 
@@ -140,7 +146,14 @@ Order:
 8. lubrication envelope
 9. head interface
 
-Before detail freeze, perform the first structural modal study and identify antinodes that may require ribs, local stiffness changes or mass redistribution.
+Before detail freeze:
+
+- use an explicit sourced material-set revision;
+- perform the first structural modal study;
+- identify antinodes that may require ribs, local stiffness changes or mass redistribution;
+- record boundary conditions, mesh evidence and damping confidence.
+
+The material provenance schema and validator are already established in baseline 0.4.0; numeric material properties remain intentionally unresolved until sourced.
 
 **Exit gate:** `SHORT_BLOCK_STRUCTURAL_PASS`
 
@@ -204,6 +217,7 @@ This phase explicitly includes:
 - exhaust pulse timing
 - desired acoustic signature
 - unwanted drone bands
+- frequency-to-geometry screening candidates generated before CAD freeze
 
 **Exit gate:** `AIRFLOW_GEOMETRY_PASS`
 
@@ -295,7 +309,7 @@ PROJECT BASELINE ✅
   ↓
 DIMENSIONAL RECONSTRUCTION ← CURRENT
   ↘
-   NVH BASELINE / ORDER MAP
+   NVH BASELINE / RESONANCE SYNTHESIS
   ↓
 MASTER SKELETON
   ↓
@@ -303,7 +317,7 @@ CRANKSHAFT
   ↓
 ROD / PISTON
   ↓
-BLOCK + MODAL STUDY
+BLOCK + SOURCED MATERIAL SET + MODAL STUDY
   ↓
 HEADS / VALVETRAIN
   ↓
