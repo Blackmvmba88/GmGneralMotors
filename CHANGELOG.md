@@ -2,6 +2,24 @@
 
 All notable engineering-baseline changes are recorded here.
 
+## [Unreleased]
+
+### Added
+
+- `parameters/phase1_closure.yaml` numeric handoff ledger
+- `engineering/phase1_gate.py` conservative closure evaluator
+- `scripts/phase1_gate_report.py` blocker report
+- `tests/test_phase1_gate.py`
+- `docs/phase1_numeric_closure.md`
+- CI hook for Phase 1 closure reporting
+
+### Engineering policy
+
+- `REFERENCE`, `UNKNOWN`, `DECISION_PENDING` and `SCREENING_ONLY` do not pass authoritative geometry gates
+- accepted closure states are `DESIGN_TARGET`, `CALCULATED`, `VERIFIED`, and `LOCKED`, with provenance requirements
+- unresolved engineering inputs are reported as blockers without pretending they are software failures
+- CAD and Blender remain locked until numeric handoff and skeleton gates pass
+
 ## [0.6.0] — 2026-09-04
 
 ### Advanced
