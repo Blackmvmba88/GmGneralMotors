@@ -30,6 +30,9 @@ jobs:
       - name: Run engineering unit tests
         run: python -m unittest discover -s tests -p "test_*.py"
 
+      - name: Report Phase 1 numeric closure
+        run: python scripts/phase1_gate_report.py
+
       - name: Generate dimensional reconstruction audit
         run: python scripts/dimensional_audit.py --csv validation/dimensional_candidates.csv
 
