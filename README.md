@@ -3,7 +3,7 @@
 > **Status:** PHASE 1 — DIMENSIONAL RECONSTRUCTION  
 > **3D modeling:** LOCKED  
 > **Blender:** LOCKED  
-> **Baseline:** v0.4.0
+> **Baseline:** v0.5.0
 
 This repository is the engineering source of truth for a modular, parametric V8 engine digital master. The goal is not to draw an engine by eye; it is to define enough geometry, interfaces, parameters, kinematics, resonance behavior, energy paths and validation rules that the engine becomes a reproducible consequence of the system.
 
@@ -38,6 +38,7 @@ If a structure is strong statically but lands on a harmful resonance in the oper
 - 8 cylinders / 4 per bank
 - OHV / pushrod baseline
 - longitudinal crankshaft
+- **90° cross-plane crank — development direction, not production lock**
 - liquid cooling
 - wet-sump lubrication baseline
 - central intake
@@ -65,7 +66,7 @@ Derived exactly from those inputs:
 
 ### Development dimensional authority
 
-Phase 1 now uses the explicit blueprint geometry `101.6 × 88.9 mm` as **DEVELOPMENT_AUTHORITY**. The visible `5.7 L / 350 CID` values are treated as nominal labels.
+Phase 1 uses the explicit blueprint geometry `101.6 × 88.9 mm` as **DEVELOPMENT_AUTHORITY**. The visible `5.7 L / 350 CID` values are treated as nominal labels.
 
 This is deliberately **not** a production manufacturing lock. Bore/stroke can still be revised later when durability, thermal, emissions, packaging, combustion and NVH evidence exists.
 
@@ -99,6 +100,37 @@ compression_ratio = (swept_volume + clearance_volume) / clearance_volume
 
 This allows uncertainty to stay explicit without allowing geometry to drift.
 
+## Crank architecture development direction
+
+Baseline 0.5.0 selects a **90° cross-plane crank** as the current development direction because the present program prioritizes controlled premium NVH, low fatigue/drone and deliberate low/mid-frequency character.
+
+This choice accepts a higher counterweight/inertia burden in exchange for a more favorable development path for the current premium V8 objective. A flat-plane architecture remains explicitly preserved as a future high-RPM derivative path.
+
+Development crank throw phase families:
+
+```text
+0° / 90° / 180° / 270°
+```
+
+This does **not** yet define cylinder-to-throw mapping or firing order.
+
+The kinematics layer is now executable:
+
+```text
+x(θ) = r cos(θ) + sqrt(l² - r² sin²(θ))
+travel_from_TDC = (r + l) - x(θ)
+```
+
+The tests verify TDC, BDC=stroke, 360° mechanical periodicity and cross-plane phase families without inventing an engine rod length.
+
+See:
+
+- `docs/crank_architecture_trade.md`
+- `docs/kinematics.md`
+- `parameters/crank_architecture.yaml`
+- `engineering/kinematics.py`
+- `tests/test_kinematics.py`
+
 ## Resonance / premium NVH policy
 
 The project imports the **classical engineering layer** of `Blackmvmba88/archimedes-quantum-resonance-engine` as a research foundation for:
@@ -116,7 +148,7 @@ The quantum-matter modules remain a separate research domain. They are not used 
 
 ### Frequency → geometry screening
 
-The engineering layer can now invert several resonance relations before CAD:
+The engineering layer can invert several resonance relations before CAD:
 
 - target frequency → engine-order crossing RPM;
 - target frequency → quarter-wave effective length;
@@ -142,7 +174,7 @@ See:
 
 Authoritative simulation may not use anonymous `aluminum`, `steel`, `iron` or similar generic material labels.
 
-`parameters/materials.yaml` now defines the property and provenance contract required before the first credible modal/thermal model. Numeric properties must identify source, revision, temperature and status; damping additionally requires confidence metadata.
+`parameters/materials.yaml` defines the property and provenance contract required before the first credible modal/thermal model. Numeric properties must identify source, revision, temperature and status; damping additionally requires confidence metadata.
 
 No material constants have been invented yet. Component assignments remain `UNKNOWN` until sourced candidates are reviewed.
 
@@ -161,6 +193,7 @@ See:
 ├── CHANGELOG.md
 ├── V8_ENGINE_TECHNICAL_CONTRACT.md
 ├── docs/
+│   ├── crank_architecture_trade.md
 │   ├── dimensional_model.md
 │   ├── dimensional_reconstruction.md
 │   ├── skeleton_spec.md
@@ -175,9 +208,11 @@ See:
 │   └── research/
 ├── engineering/
 │   ├── dimensional.py
+│   ├── kinematics.py
 │   └── resonance.py
 ├── parameters/
 │   ├── master_parameters.yaml
+│   ├── crank_architecture.yaml
 │   ├── derived_parameters.yaml
 │   ├── dimensional_constraints.yaml
 │   ├── materials.yaml
@@ -191,6 +226,7 @@ See:
 │   └── validate_parameters.py
 ├── tests/
 │   ├── test_dimensional.py
+│   ├── test_kinematics.py
 │   └── test_resonance.py
 └── .github/workflows/
     └── validate.yml
@@ -240,8 +276,9 @@ Completed:
 - [x] dimensional dependency model
 - [x] executable dimensional audit
 - [x] development displacement authority selected
+- [x] cross-plane crank selected as development direction
+- [x] executable slider-crank kinematics core
 - [x] interface-control framework
-- [x] kinematic framework
 - [x] resonance/NVH architecture
 - [x] engine-order screening
 - [x] inverse resonance geometry screening
@@ -255,7 +292,9 @@ Still blocking authoritative CAD:
 - [ ] piston/deck stack resolved
 - [ ] piston operating clearance resolved
 - [ ] operating RPM envelope frozen
-- [ ] crank phasing / firing order frozen
+- [ ] cylinder-to-throw mapping frozen
+- [ ] firing order frozen
+- [ ] crank station / bank stagger geometry frozen
 - [ ] master skeleton specification frozen
 - [ ] sourced material properties selected for modal analysis
 - [ ] modal-analysis boundary inputs available
