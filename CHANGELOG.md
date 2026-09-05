@@ -2,6 +2,36 @@
 
 All notable engineering-baseline changes are recorded here.
 
+## [0.4.0] — 2026-09-04
+
+### Advanced
+
+- explicit blueprint bore/stroke promoted to `DEVELOPMENT_AUTHORITY` for Phase 1 calculations
+- visible `5.7 L / 350 CID` values retained as nominal labels rather than geometry authority
+- production bore/stroke remain unlocked pending later durability, thermal, emissions, packaging and NVH evidence
+
+### Added
+
+- inverse engine-order crossing relation
+- inverse quarter-wave geometry relation
+- inverse Helmholtz cavity-volume relation
+- inverse Helmholtz neck-area relation
+- modal exclusion-band helper
+- resonance geometry synthesis CLI
+- resonance inverse-relation tests
+- resonance geometry synthesis design contract
+- material provenance registry contract
+- material registry validator
+- material selection / FEA evidence contract
+- CI hooks for material provenance and resonance synthesis smoke tests
+
+### Guardrails
+
+- piston operating OD / wall clearance remains unresolved
+- no material property values were invented
+- no resonance-derived candidate geometry is treated as final without CFD/FEA/thermal/fatigue/manufacturing/test evidence
+- CAD and Blender remain locked
+
 ## [0.3.0] — 2026-08-25
 
 ### Phase transition
@@ -42,7 +72,7 @@ Alternative fixed-bore targets were calculated without selecting them:
 
 ### Guardrails
 
-- no displacement authority candidate is locked yet
+- no displacement authority candidate is production-locked yet
 - piston operating OD remains unknown until clearance is defined
 - 10.0:1 compression ratio remains unverified until clearance-volume geometry is resolved
 - missing skeleton dimensions remain explicit `UNKNOWN`
