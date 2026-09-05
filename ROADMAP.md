@@ -1,93 +1,73 @@
 # V8 ENGINE — Engineering Roadmap
 
-**Baseline:** 0.5.0  
+**Baseline:** 0.6.0  
 **Current phase:** Phase 1 — Dimensional Reconstruction  
 **3D modeling:** LOCKED
 
 ## Phase 0 — Project baseline ✅
 
-Define the problem before defining geometry.
-
 Completed:
 
-- [x] Units convention
-- [x] Global XYZ convention
-- [x] Front/rear convention
-- [x] Primary datums
-- [x] Naming convention
-- [x] Repository architecture
-- [x] Initial blueprint parameter registry
-- [x] Parameter state model
-- [x] Versioning policy
-- [x] Component hierarchy
-- [x] Validation framework
-- [x] Resonance / NVH treated as first-class architecture
-- [x] Classical resonance research import documented
-- [x] Critical unknown register established
-- [x] Phase/gate ownership defined
-
-The unresolved dimensions, firing sequence, RPM envelope and skeleton geometry are intentionally carried into their owning downstream phases instead of blocking the project-baseline freeze.
+- [x] units / coordinate conventions / datums
+- [x] naming / repository / versioning policy
+- [x] component hierarchy and validation framework
+- [x] resonance / NVH as first-class architecture
+- [x] critical unknown register and phase/gate ownership
 
 **Exit gate:** `BASELINE_READY` — PASS
 
 ## Phase 1 — Dimensional reconstruction 🔄
 
-Convert the reference blueprint into a coherent dimensional system.
-
 Completed:
 
 - [x] bore/stroke/displacement audit
-- [x] exact displacement derived from visible geometry
 - [x] blueprint bore/stroke selected as `DEVELOPMENT_AUTHORITY`
 - [x] production lock explicitly withheld
-- [x] crank-radius relation frozen
-- [x] bank half-angle relation frozen
-- [x] piston/bore clearance relation frozen
-- [x] deck-stack relation frozen
-- [x] compression-ratio dependency relation frozen
-- [x] executable dimensional audit added
-- [x] dimensional unit tests added
+- [x] crank radius / bank half-angle relations
+- [x] piston/bore clearance relation
+- [x] deck-stack / compression-ratio relations
+- [x] executable dimensional audit and tests
 - [x] 90° cross-plane crank selected as development direction
-- [x] flat-plane retained as future variant architecture
+- [x] master-skeleton **spatial relation layer** formalized
+- [x] cylinder-axis vectors mathematically defined
+- [x] cylinder-spacing relation defined as `bore + bridge`
+- [x] longitudinal cylinder-center relation defined
+- [x] deck-plane construction relation defined
+- [x] bore-axis offset made an explicit design decision
+- [x] cylinder centers separated conceptually from crankpin stations
 
 Still required:
 
 - [ ] close overall envelope interpretation
-- [ ] define cylinder center spacing
-- [ ] define longitudinal bank stagger
-- [ ] close deck stack
+- [ ] select inter-cylinder bridge / center spacing
+- [ ] select front cylinder longitudinal datum
+- [ ] define bank longitudinal stagger
+- [ ] select zero/nonzero bore-axis offset and value
+- [ ] close deck / rod / piston stack
 - [ ] resolve piston operating clearance / wrist pin
-- [ ] define crank journal dimensions
-- [ ] define crank station spacing
-- [ ] define connecting-rod length
-- [ ] define camshaft position
-- [ ] define head thickness and chamber volume model
-- [ ] define gasket/deck/piston-crown volume inputs
+- [ ] define crank journal dimensions and station positions
+- [ ] define connecting-rod dimensions
+- [ ] define camshaft X/Z position
+- [ ] define head / chamber / gasket / crown-volume inputs
 - [ ] define accessory/flywheel interface planes
 - [ ] attach provenance/status to every critical input
 
-No Blender. No aesthetic mesh work.
+No Blender. No authoritative CAD.
 
 **Exit gate:** `DIMENSIONAL_MODEL_VALIDATED`
 
 ## Gate R0 — Resonance and energy-flow baseline 🔄
-
-This gate runs in parallel with Phase 1 before authoritative structural geometry is frozen.
 
 Completed:
 
 - [x] engine-order map generator
 - [x] source → path → receiver architecture
 - [x] preliminary modal-separation screening
-- [x] premium acoustic-signature design intent
-- [x] structural modal/harmonic analysis plan
-- [x] intake/exhaust resonance model families identified
-- [x] inverse engine-order crossing relation
-- [x] inverse quarter-wave geometry relation
-- [x] inverse Helmholtz geometry relations
+- [x] premium acoustic-signature intent
+- [x] structural modal/harmonic plan
+- [x] inverse quarter-wave / Helmholtz / engine-order relations
 - [x] resonance geometry synthesis CLI
-- [x] modal exclusion-band screening helper
-- [x] cross-plane vs flat-plane NVH trade direction established
+- [x] cross-plane vs flat-plane NVH development direction
 
 Still required:
 
@@ -100,60 +80,71 @@ Still required:
 
 **Exit gate:** `NVH_BASELINE_READY`
 
-## Phase 2 — Master skeleton
+## Phase 2 — Master skeleton 🔄 RELATION LAYER READY
 
-Create the minimum authoritative geometry:
+Required entities:
 
 - crankshaft axis
 - camshaft axis
 - eight cylinder axes
 - left/right deck planes
-- front/rear planes
-- crank stations
+- front/rear reference planes
+- crank station planes
 - flywheel plane
 - pulley plane
 
-All entities must be parameter-driven.
+### Completed before CAD
 
-The skeleton may not be frozen until Phase 1 supplies every required spatial input.
+- [x] bank-axis direction equations
+- [x] deck normal equations
+- [x] cylinder-spacing dependency
+- [x] longitudinal center-generation relation
+- [x] explicit bank-stagger convention
+- [x] explicit bore-axis offset policy
+- [x] crank-normal package-plane normals
+- [x] cam-axis parallelism relation for OHV baseline
+- [x] executable relation helper module
+- [x] skeleton relation unit tests
+- [x] Phase 1 handoff split into relation layer vs numeric layer
 
-The crank architecture may inform skeleton interfaces, but unresolved cylinder-to-throw mapping, crank stations, bank stagger and package planes still block the authoritative skeleton.
+### Numeric handoff still required
+
+- [ ] center spacing / bridge
+- [ ] front cylinder datum
+- [ ] bank stagger
+- [ ] bore-axis offset mode/value
+- [ ] deck height
+- [ ] cam axis X/Z
+- [ ] crank station map
+- [ ] cylinder-to-throw / rod-journal mapping
+- [ ] flywheel / pulley Y positions
+
+The relation layer being ready does **not** unlock CAD.
 
 **Exit gate:** `SKELETON_LOCKED`
 
 ## Phase 3 — Rotating assembly 🔄 PREPARATION
 
-Development direction:
+Completed:
 
-- [x] 90° cross-plane crank selected for the first premium V8 baseline
-- [x] throw phase families defined: `0° / 90° / 180° / 270°`
-- [x] executable zero-offset slider-crank relation implemented
-- [x] TDC / BDC / stroke / 360° periodicity tests implemented
-- [x] evenly firing four-stroke V8 event cadence derived as `90°`
+- [x] 90° cross-plane development direction
+- [x] throw phases `0° / 90° / 180° / 270°`
+- [x] executable zero-offset slider-crank relation
+- [x] TDC / BDC / stroke / 360° periodicity tests
+- [x] evenly firing four-stroke event cadence = `90°`
 
-Still required before authoritative rotating geometry:
+Still required:
 
 - [ ] connecting-rod center-to-center length
 - [ ] cylinder-to-throw mapping
-- [ ] rod-journal pairing strategy
+- [ ] rod-journal pairing
 - [ ] firing order
-- [ ] numeric cylinder mapping, if numeric IDs are adopted
-- [ ] crank station spacing
-- [ ] bank longitudinal stagger
-- [ ] main / rod journal diameters
+- [ ] crank station spacing / bank stagger
+- [ ] journal diameters
 - [ ] counterweight strategy
 - [ ] rotating / reciprocating mass model
 - [ ] torsional excitation map
 - [ ] damper strategy
-
-Build and validate later:
-
-1. crankshaft
-2. connecting rods
-3. pistons
-4. wrist pins
-
-Run a complete 0°–720° crank cycle without contradictory constraints, discontinuities or unintended interference.
 
 **Exit gate:** `ROTATING_ASSEMBLY_PASS`
 
@@ -171,39 +162,17 @@ Order:
 8. lubrication envelope
 9. head interface
 
-Before detail freeze:
-
-- use an explicit sourced material-set revision;
-- perform the first structural modal study;
-- identify antinodes that may require ribs, local stiffness changes or mass redistribution;
-- record boundary conditions, mesh evidence and damping confidence.
-
-The material provenance schema and validator already exist; numeric material properties remain intentionally unresolved until sourced.
+Before detail freeze use an explicit sourced material-set revision and perform structural modal analysis with boundary/mesh/damping provenance.
 
 **Exit gate:** `SHORT_BLOCK_STRUCTURAL_PASS`
 
 ## Phase 5 — Cylinder heads
 
-Resolve one bank first, validate it, then derive the opposite side where symmetry permits.
-
-- chamber envelope
-- intake/exhaust valves
-- seats and guides
-- pushrod clearances
-- rocker geometry
-- head/block interface
-- head-cover and deck radiation risk
+Resolve one bank, validate, then derive the opposite side where symmetry permits.
 
 **Exit gate:** `HEAD_SYSTEM_PASS`
 
 ## Phase 6 — Valvetrain
-
-- camshaft
-- lifters
-- pushrods
-- rockers
-- valves
-- springs
 
 For a four-stroke engine: `cam_angle = crank_angle / 2`.
 
@@ -213,120 +182,65 @@ Add valve-event/order excitation to the NVH map.
 
 ## Phase 7 — Timing system
 
-Define crank gear, cam gear, chain/drive strategy, tensioning envelope, front cover interface and tonal-whine risk.
+Define crank/cam drive, tensioning, front cover and tonal-whine risk.
 
 **Exit gate:** `TIMING_PASS`
 
 ## Phase 8 — Lubrication
 
-Define oil pan, pickup, pump, galleries, bearing feeds, return paths and sump-panel vibration risk.
+Define pan, pickup, pump, galleries, feeds, returns and sump-panel vibration risk.
 
 **Exit gate:** `LUBRICATION_LAYOUT_PASS`
 
 ## Phase 9 — Cooling
 
-Define water-jacket envelope, head passages, inlet/outlet, pump and thermostat interfaces. Review pump/blade-pass excitation and coolant-flow pulsation where applicable.
+Define water-jacket envelope, passages, pump and thermostat interfaces; review flow pulsation and blade-pass excitation.
 
 **Exit gate:** `COOLING_LAYOUT_PASS`
 
 ## Phase 10 — Intake and exhaust
 
-Define plenum, runners, throttle interface, injector positions, ports and exhaust-manifold/header interfaces.
+Includes runner/plenum tuning, cavity modes, quarter-wave, Helmholtz opportunities, exhaust pulse timing, desired signature and anti-drone behavior.
 
-This phase explicitly includes:
-
-- runner tuning
-- plenum/cavity modes
-- quarter-wave behavior
-- Helmholtz resonator opportunities
-- exhaust pulse timing
-- desired acoustic signature
-- unwanted drone bands
-- frequency-to-geometry screening candidates generated before CAD freeze
-- bank-specific pulse analysis after firing order is frozen
+Bank-specific pulse analysis starts after firing order is frozen.
 
 **Exit gate:** `AIRFLOW_GEOMETRY_PASS`
 
 ## Phase 11 — Accessory drive
 
-Define crank pulley, water pump, alternator, tensioners, pulleys and belt path. Add accessory orders and blade/slot-pass frequencies to the excitation map.
+Define pulleys, belt path and accessory order/blade/tooth-pass families.
 
 **Exit gate:** `FRONT_DRIVE_PASS`
 
 ## Gate R1 — Integrated NVH screening
 
-Before complete-assembly alpha:
-
-- structural modal analysis
-- harmonic-response screening
-- torsional screening
-- mount-path review
-- intake/exhaust acoustic review
-- radiator-panel review
-- resonance coincidences ranked by severity
+Requires modal, harmonic, torsional, mount-path, intake/exhaust acoustic and radiator-panel review.
 
 **Exit gate:** `NVH_INTEGRATED_PASS`
 
 ## Phase 12 — Complete assembly
 
-Run:
-
-- dimensional test
-- alignment test
-- symmetry test
-- interference test
-- envelope test
-- full rotation test
-- NVH integrated pass
+Run dimensional, alignment, symmetry, interference, envelope, full-rotation and NVH checks.
 
 **Exit gate:** `V8_ASSEMBLY_ALPHA`
 
 ## Phase 13 — Engineering detail
 
-Only after functional geometry passes:
-
-- fasteners
-- bosses
-- ribs
-- gaskets
-- passages
-- threaded features
-- production fillets
-- casting detail
-
-Ribs and wall thickness changes must be justified by load path, casting/manufacturing constraints, modal response or thermal need—not decoration.
+Fasteners, bosses, ribs, gaskets, passages, threaded features, production fillets and casting details only after functional validation.
 
 **Exit gate:** `V8_ASSEMBLY_BETA`
 
 ## Phase 14 — Blender entry gate
 
-Blender becomes available for visualization after the engineering geometry is stable.
-
-Blender responsibilities:
-
-- materials
-- shading
-- animation
-- cameras
-- lighting
-- exploded sequences
-- cutaways
-- technical/cinematic rendering
-- optional visualizations of mode shapes and energy paths
-
-Blender is not the authority for master dimensions or structural resonance claims.
+Blender owns visualization, materials, animation, cameras, lighting, exploded/cutaway and mode/energy-path visualization. It does not own master dimensions or resonance claims.
 
 ## Phase 15 — Digital twin visual
 
-Generate front, rear, left, right, top, bottom, isometric, exploded and cutaway outputs.
-
-The digital twin should eventually carry measured or simulated NVH metadata per configuration.
+Generate orthographic, isometric, exploded and cutaway outputs with future NVH metadata.
 
 ## Phase 16 — Release
 
-Target release: `V8_ENGINE_1.0.0`
-
-Release must include source parameters, engineering geometry, validation reports, drawings, exports, renders, change history and an NVH evidence package.
+Target: `V8_ENGINE_1.0.0`
 
 ## Critical path
 
@@ -335,17 +249,21 @@ PROJECT BASELINE ✅
   ↓
 DIMENSIONAL RECONSTRUCTION ← CURRENT
   ↘
-   NVH BASELINE / RESONANCE SYNTHESIS
+   NVH / RESONANCE SYNTHESIS
   ↓
 CROSS-PLANE DEVELOPMENT DIRECTION ✅
   ↓
-CYLINDER ↔ THROW MAPPING / FIRING ORDER
+SKELETON RELATION LAYER ✅
+  ↓
+NUMERIC SPATIAL HANDOFF
+  ↓
+CYLINDER ↔ THROW / FIRING ORDER
   ↓
 MASTER SKELETON
   ↓
 ROTATING ASSEMBLY
   ↓
-BLOCK + SOURCED MATERIAL SET + MODAL STUDY
+BLOCK + MATERIAL SET + MODAL STUDY
   ↓
 HEADS / VALVETRAIN
   ↓
