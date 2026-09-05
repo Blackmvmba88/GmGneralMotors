@@ -2,10 +2,15 @@ import unittest
 
 from engineering.resonance import (
     engine_order_frequency,
+    helmholtz_cavity_volume_for_frequency,
+    helmholtz_neck_area_for_frequency,
     helmholtz_resonator_frequency,
+    modal_exclusion_band,
     modal_separation_percent,
     quarter_wave_frequency,
+    quarter_wave_length,
     rectangular_cavity_modes,
+    rpm_for_engine_order_frequency,
     sdof_natural_frequency,
     strouhal_frequency,
     v8_firing_frequency,
@@ -19,8 +24,16 @@ class ResonanceCoreTests(unittest.TestCase):
     def test_first_order_at_3000_rpm_is_50_hz(self):
         self.assertAlmostEqual(engine_order_frequency(3000, 1.0), 50.0)
 
+    def test_engine_order_inverse(self):
+        self.assertAlmostEqual(rpm_for_engine_order_frequency(400.0, 4.0), 6000.0)
+
     def test_quarter_wave_one_meter(self):
         self.assertAlmostEqual(quarter_wave_frequency(1.0), 85.75, places=2)
+
+    def test_quarter_wave_inverse(self):
+        target = 250.0
+        length = quarter_wave_length(target)
+        self.assertAlmostEqual(quarter_wave_frequency(length), target, places=9)
 
     def test_rectangular_cavity_first_axial_mode(self):
         modes = rectangular_cavity_modes(1.0, 2.0, 3.0, max_index=1)
@@ -29,6 +42,24 @@ class ResonanceCoreTests(unittest.TestCase):
     def test_helmholtz_frequency_positive(self):
         f = helmholtz_resonator_frequency(0.001, 0.01, 0.05)
         self.assertGreater(f, 0.0)
+
+    def test_helmholtz_volume_inverse(self):
+        target = 180.0
+        area = 0.0012
+        length = 0.06
+        volume = helmholtz_cavity_volume_for_frequency(target, area, length)
+        self.assertAlmostEqual(
+            helmholtz_resonator_frequency(area, volume, length), target, places=9
+        )
+
+    def test_helmholtz_area_inverse(self):
+        target = 220.0
+        volume = 0.004
+        length = 0.05
+        area = helmholtz_neck_area_for_frequency(target, volume, length)
+        self.assertAlmostEqual(
+            helmholtz_resonator_frequency(area, volume, length), target, places=9
+        )
 
     def test_strouhal_frequency(self):
         self.assertAlmostEqual(strouhal_frequency(20.0, 0.05, 0.2), 80.0)
@@ -39,6 +70,11 @@ class ResonanceCoreTests(unittest.TestCase):
 
     def test_modal_separation(self):
         self.assertAlmostEqual(modal_separation_percent(90.0, 100.0), 10.0)
+
+    def test_modal_exclusion_band(self):
+        low_hz, high_hz = modal_exclusion_band(400.0, 10.0)
+        self.assertAlmostEqual(low_hz, 360.0)
+        self.assertAlmostEqual(high_hz, 440.0)
 
 
 if __name__ == "__main__":

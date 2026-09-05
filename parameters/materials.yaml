@@ -1,0 +1,65 @@
+schema_version: 1
+baseline: 0.4.0
+status: DESIGN_DEFINITION
+
+rules:
+  authoritative_material_requires_explicit_id: true
+  generic_material_names_forbidden:
+    - aluminum
+    - aluminium
+    - steel
+    - iron
+    - titanium
+  numeric_property_requires:
+    - source
+    - source_revision
+    - temperature_c
+    - status
+  damping_requires_explicit_confidence: true
+  missing_properties_remain_unknown: true
+
+required_properties:
+  - density_kg_m3
+  - elastic_modulus_pa
+  - poisson_ratio
+  - yield_strength_pa
+  - fatigue_data
+  - thermal_conductivity_w_mk
+  - thermal_expansion_per_k
+  - damping_loss_factor
+  - temperature_dependency
+
+material_sets:
+  v8_structural_baseline:
+    revision: 0
+    status: UNKNOWN
+    approved_for_fea: false
+    note: No material values are authoritative yet.
+
+component_assignments:
+  block_bedplate:
+    material_id: null
+    status: UNKNOWN
+  cylinder_heads:
+    material_id: null
+    status: UNKNOWN
+  crankshaft:
+    material_id: null
+    status: UNKNOWN
+  connecting_rods:
+    material_id: null
+    status: UNKNOWN
+  pistons:
+    material_id: null
+    status: UNKNOWN
+  covers_oil_pan:
+    material_id: null
+    status: UNKNOWN
+  intake_structure:
+    material_id: null
+    status: UNKNOWN
+  exhaust_structure:
+    material_id: null
+    status: UNKNOWN
+
+materials: {}
