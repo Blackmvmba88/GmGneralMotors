@@ -36,6 +36,15 @@ def engine_order_frequency(rpm: float, order: float) -> float:
     return order * rpm / 60.0
 
 
+def rpm_for_engine_order_frequency(target_frequency_hz: float, order: float) -> float:
+    """Return the RPM where an engine order crosses a target frequency."""
+    if target_frequency_hz < 0:
+        raise ValueError("target_frequency_hz must be non-negative")
+    if order <= 0:
+        raise ValueError("order must be positive")
+    return target_frequency_hz * 60.0 / order
+
+
 def firing_frequency_four_stroke(rpm: float, cylinders: int) -> float:
     """Combustion firing frequency for an evenly firing four-stroke engine.
 
@@ -60,6 +69,15 @@ def quarter_wave_frequency(length_m: float, speed_of_sound_m_s: float = DEFAULT_
     return speed_of_sound_m_s / (4.0 * length_m)
 
 
+def quarter_wave_length(target_frequency_hz: float, speed_of_sound_m_s: float = DEFAULT_SPEED_OF_SOUND_M_S) -> float:
+    """Inverse quarter-wave relation L = c / (4f)."""
+    if target_frequency_hz <= 0:
+        raise ValueError("target_frequency_hz must be positive")
+    if speed_of_sound_m_s <= 0:
+        raise ValueError("speed_of_sound_m_s must be positive")
+    return speed_of_sound_m_s / (4.0 * target_frequency_hz)
+
+
 def helmholtz_resonator_frequency(
     neck_area_m2: float,
     cavity_volume_m3: float,
@@ -77,6 +95,42 @@ def helmholtz_resonator_frequency(
     return (speed_of_sound_m_s / (2.0 * pi)) * sqrt(
         neck_area_m2 / (cavity_volume_m3 * effective_neck_length_m)
     )
+
+
+def helmholtz_cavity_volume_for_frequency(
+    target_frequency_hz: float,
+    neck_area_m2: float,
+    effective_neck_length_m: float,
+    speed_of_sound_m_s: float = DEFAULT_SPEED_OF_SOUND_M_S,
+) -> float:
+    """Solve ideal Helmholtz cavity volume for target frequency.
+
+    V = A / (L_eff * (2πf/c)^2)
+    """
+    if target_frequency_hz <= 0:
+        raise ValueError("target_frequency_hz must be positive")
+    if neck_area_m2 <= 0 or effective_neck_length_m <= 0 or speed_of_sound_m_s <= 0:
+        raise ValueError("Helmholtz geometry and sound speed must be positive")
+    ratio = 2.0 * pi * target_frequency_hz / speed_of_sound_m_s
+    return neck_area_m2 / (effective_neck_length_m * ratio**2)
+
+
+def helmholtz_neck_area_for_frequency(
+    target_frequency_hz: float,
+    cavity_volume_m3: float,
+    effective_neck_length_m: float,
+    speed_of_sound_m_s: float = DEFAULT_SPEED_OF_SOUND_M_S,
+) -> float:
+    """Solve ideal Helmholtz neck area for target frequency.
+
+    A = V * L_eff * (2πf/c)^2
+    """
+    if target_frequency_hz <= 0:
+        raise ValueError("target_frequency_hz must be positive")
+    if cavity_volume_m3 <= 0 or effective_neck_length_m <= 0 or speed_of_sound_m_s <= 0:
+        raise ValueError("Helmholtz geometry and sound speed must be positive")
+    ratio = 2.0 * pi * target_frequency_hz / speed_of_sound_m_s
+    return cavity_volume_m3 * effective_neck_length_m * ratio**2
 
 
 @dataclass(frozen=True, order=True)
@@ -161,6 +215,16 @@ def modal_separation_percent(excitation_hz: float, natural_hz: float) -> float:
     if natural_hz <= 0:
         raise ValueError("natural_hz must be positive")
     return abs(natural_hz - excitation_hz) / natural_hz * 100.0
+
+
+def modal_exclusion_band(natural_hz: float, margin_percent: float) -> tuple[float, float]:
+    """Return the screening exclusion band around a natural frequency."""
+    if natural_hz <= 0:
+        raise ValueError("natural_hz must be positive")
+    if margin_percent < 0 or margin_percent >= 100:
+        raise ValueError("margin_percent must be in [0, 100)")
+    fraction = margin_percent / 100.0
+    return natural_hz * (1.0 - fraction), natural_hz * (1.0 + fraction)
 
 
 @dataclass(frozen=True)
