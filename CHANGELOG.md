@@ -2,6 +2,51 @@
 
 All notable engineering-baseline changes are recorded here.
 
+## [0.6.0] — 2026-09-04
+
+### Advanced
+
+- master-skeleton geometry split into an executable relation layer and unresolved numeric handoff layer
+- cylinder-axis directions made deterministic from bank angle
+- cylinder center spacing made dependent on bore + explicit inter-cylinder bridge
+- bank longitudinal stagger made explicit instead of hidden in placement
+- bore-axis offset promoted to an explicit design decision
+- cylinder longitudinal centers separated from crankpin station semantics
+
+### Added
+
+- `parameters/skeleton_relations.yaml`
+- `engineering/skeleton.py`
+- `tests/test_skeleton.py`
+- executable bank-axis vector relations
+- longitudinal cylinder-center generator
+- cylinder spacing / bridge inverse relations
+- explicit side-by-side rod center-separation candidate relation
+- deck-plane point construction helper
+- package-plane and engine-center-plane normals
+- Phase 1 handoff relation/numeric split
+- expanded skeleton specification
+
+### Master parameter additions
+
+- inter-cylinder bridge
+- left-bank front cylinder datum
+- explicit bank-offset convention
+- bore-axis offset mode/value
+- rod big-end width / inter-rod side clearance
+- crank station position array
+- OHV cam-axis direction relation
+- package-plane normals
+
+### Guardrails
+
+- no cylinder spacing or bridge width invented
+- no bank stagger invented
+- no deck height invented
+- no crank station position invented
+- no zero bore-offset assumption made
+- relation-layer readiness does not unlock CAD or Blender
+
 ## [0.5.0] — 2026-09-04
 
 ### Development direction

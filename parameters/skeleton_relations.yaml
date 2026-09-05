@@ -1,0 +1,100 @@
+schema_version: 1
+baseline: 0.6.0
+status: PHASE_1_TO_PHASE_2_RELATION_LAYER
+
+coordinate_frame:
+  crank_axis_direction: [0.0, 1.0, 0.0]
+  vertical_direction: [0.0, 0.0, 1.0]
+  left_direction: [-1.0, 0.0, 0.0]
+  right_direction: [1.0, 0.0, 0.0]
+
+bank_geometry:
+  half_angle:
+    equation: bank_angle_deg / 2
+    current_value_deg: 45.0
+    status: CALCULATED
+  left_cylinder_axis_unit:
+    equation: [-sin(bank_angle/2), 0, cos(bank_angle/2)]
+    status: RELATION_LOCKED
+  right_cylinder_axis_unit:
+    equation: [sin(bank_angle/2), 0, cos(bank_angle/2)]
+    status: RELATION_LOCKED
+  deck_plane_normal:
+    equation: corresponding_bank_cylinder_axis_unit
+    status: RELATION_LOCKED
+
+longitudinal_geometry:
+  cylinder_center_spacing:
+    equation: bore_mm + inter_cylinder_bridge_mm
+    status: RELATION_LOCKED_INPUTS_UNKNOWN
+  bank_cylinder_centers:
+    equation: front_cylinder_center_y_mm + index * cylinder_center_spacing_mm
+    index_domain: [0, 1, 2, 3]
+    status: RELATION_LOCKED_INPUTS_UNKNOWN
+  right_bank_front_center:
+    equation: left_bank_front_center_y_mm + right_minus_left_bank_offset_mm
+    status: RELATION_LOCKED_INPUTS_UNKNOWN
+  side_by_side_common_pin_bank_offset_candidate:
+    equation: 0.5 * (left_rod_big_end_width_mm + right_rod_big_end_width_mm) + inter_rod_side_clearance_mm
+    applicability: SIDE_BY_SIDE_RODS_ON_COMMON_CRANKPIN
+    status: ARCHITECTURE_DEPENDENT_INPUTS_UNKNOWN
+
+plane_relations:
+  deck_reference_point:
+    equation: cylinder_axis_base_point + deck_height_mm * cylinder_axis_unit
+    status: RELATION_LOCKED_INPUTS_UNKNOWN
+  flywheel_plane_normal:
+    value: [0.0, 1.0, 0.0]
+    status: LOCKED_RELATION
+  pulley_plane_normal:
+    value: [0.0, 1.0, 0.0]
+    status: LOCKED_RELATION
+  engine_center_plane_normal:
+    value: [1.0, 0.0, 0.0]
+    status: LOCKED_RELATION
+
+cam_axis:
+  architecture: OHV_CENTRAL_CAM_BASELINE
+  direction:
+    value: [0.0, 1.0, 0.0]
+    status: DEVELOPMENT_RELATION
+  x_position_mm:
+    value: null
+    status: UNKNOWN
+  z_position_mm:
+    value: null
+    status: UNKNOWN
+  note: Position remains unresolved; only parallelism to the crank axis is carried as the development relation.
+
+bore_axis_offset:
+  mode:
+    value: UNRESOLVED
+    status: UNKNOWN
+  offset_mm:
+    value: null
+    status: UNKNOWN
+  note: Do not assume every cylinder axis intersects the crank centerline until a zero-offset or deliberate bore-offset architecture is selected.
+
+crankpin_station_policy:
+  status: SEPARATE_FROM_CYLINDER_CENTERS
+  note: Crankpin station planes are not derived from cylinder longitudinal centers until rod-journal pairing, rod widths, bank stagger and cylinder-to-throw mapping are frozen.
+
+unresolved_numeric_inputs:
+  - inter_cylinder_bridge_mm
+  - cylinder_center_spacing_mm
+  - left_bank_front_center_y_mm
+  - right_minus_left_bank_offset_mm
+  - deck_height_mm
+  - bore_axis_offset_mm
+  - cam_axis_x_mm
+  - cam_axis_z_mm
+  - crank_station_positions_mm
+  - flywheel_plane_y_mm
+  - pulley_plane_y_mm
+
+rules:
+  - Relations may be locked before numeric inputs are known.
+  - No spatial value may be inferred merely to make the skeleton visually plausible.
+  - Cylinder longitudinal centers and crankpin station planes are separate concepts.
+  - A nonzero bore-axis offset must be explicit and traceable if selected.
+  - CAD remains locked until the numeric handoff satisfies SKELETON_LOCKED prerequisites.
