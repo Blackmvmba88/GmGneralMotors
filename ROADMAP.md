@@ -51,7 +51,7 @@ Still required:
 - [ ] resolve piston operating clearance / wrist pin
 - [ ] define crank journal dimensions and station positions
 - [ ] define connecting-rod dimensions
-- [~] define camshaft X/Z position — X resolved, Z open
+- [ ] define camshaft Z position — X = 0.0 mm development target resolved
 - [ ] define head / chamber / gasket / crown-volume inputs
 - [ ] define accessory/flywheel interface planes
 - [ ] attach provenance/status to every critical input
@@ -118,7 +118,7 @@ Required entities:
 - [ ] bank stagger
 - [x] bore-axis offset mode/value — development target
 - [ ] deck height
-- [~] cam axis X/Z — X resolved, Z open
+- [ ] cam axis Z — X resolved
 - [ ] crank station map
 - [ ] cylinder-to-throw / rod-journal mapping
 - [ ] flywheel / pulley Y positions
