@@ -3,7 +3,7 @@
 > **Status:** PHASE 1 — DIMENSIONAL RECONSTRUCTION  
 > **3D modeling:** LOCKED  
 > **Blender:** LOCKED  
-> **Baseline:** v0.6.0
+> **Baseline:** v0.7.0
 
 This repository is the engineering source of truth for a modular, parametric premium V8 digital master. The goal is not to draw an engine by eye; it is to define enough geometry, interfaces, parameters, kinematics, resonance behavior and energy paths that the engine becomes a reproducible consequence of the system.
 
@@ -161,6 +161,38 @@ The remaining work is now treated as a finite closure problem instead of an open
 
 Accepted closure states are `DESIGN_TARGET`, `CALCULATED`, `VERIFIED`, and `LOCKED`, each with provenance requirements.
 
+## Constrained design-space screening — v0.7.0
+
+The remaining unknowns are now explored through explicit sensitivity sweeps instead of borrowed production-engine dimensions.
+
+Current executable screens include:
+
+- inter-cylinder bridge → center spacing → four-cylinder bank span;
+- rod/stroke ratio → connecting-rod length;
+- RPM → mean piston speed;
+- RPM → 4X evenly-firing V8 combustion-order frequency.
+
+For the current 88.9 mm stroke, the RPM sweep gives:
+
+```text
+6000 rpm → 17.780 m/s → 400.000 Hz @ 4X
+6500 rpm → 19.262 m/s → 433.333 Hz @ 4X
+7000 rpm → 20.743 m/s → 466.667 Hz @ 4X
+7500 rpm → 22.225 m/s → 500.000 Hz @ 4X
+8000 rpm → 23.707 m/s → 533.333 Hz @ 4X
+```
+
+These points are **SCREENING_ONLY** and do not define a safe redline.
+
+Phase 1 also adopts `ZERO_OFFSET / 0.0 mm` bore-axis offset as a **DESIGN_TARGET** for the neutral symmetric development baseline. This closes one skeleton-placement decision without production-locking the architecture.
+
+See:
+
+- `parameters/design_space.yaml`
+- `engineering/design_space.py`
+- `scripts/phase1_design_space.py`
+- `docs/phase1_design_space.md`
+
 See:
 
 - `parameters/phase1_closure.yaml`
@@ -215,7 +247,7 @@ Still blocking authoritative CAD:
 - [ ] inter-cylinder bridge / cylinder center spacing
 - [ ] front cylinder longitudinal datum
 - [ ] bank longitudinal stagger
-- [ ] bore-axis offset mode/value
+- [x] bore-axis offset mode/value — ZERO_OFFSET / 0.0 mm development target
 - [ ] deck / piston / rod stack
 - [ ] piston operating clearance
 - [ ] cam axis X/Z
