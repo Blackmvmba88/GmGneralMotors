@@ -1,5 +1,5 @@
 schema_version: 1
-baseline: 0.6.0
+baseline: 0.7.0
 project: GmGneralMotors_V8
 phase: PHASE_1_DIMENSIONAL_RECONSTRUCTION
 
@@ -57,15 +57,20 @@ cylinder:
     status: UNKNOWN
     convention: right_bank_front_center_y - left_bank_front_center_y
   bore_axis_offset_mode:
-    value: null
-    status: DECISION_PENDING
+    value: ZERO_OFFSET
+    status: DESIGN_TARGET
+    authority_scope: DEVELOPMENT
+    production_locked: false
+    rationale: Neutral symmetric Phase 1 baseline; any nonzero offset requires explicit friction, side-thrust, combustion, durability and NVH evidence.
     allowed:
       - ZERO_OFFSET
       - NONZERO_OFFSET
   bore_axis_offset_mm:
-    value: null
-    status: UNKNOWN
-    note: Signed cross-sectional offset from the crank-center reference under the selected offset convention; do not assume zero until the mode is selected.
+    value: 0.0
+    status: DESIGN_TARGET
+    authority_scope: DEVELOPMENT
+    production_locked: false
+    rationale: Consequence of the ZERO_OFFSET development mode; not a production lock.
 
 engine_envelope:
   width_mm:
