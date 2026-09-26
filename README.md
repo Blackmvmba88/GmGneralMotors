@@ -255,7 +255,7 @@ Still blocking authoritative CAD:
 - [x] bore-axis offset mode/value — ZERO_OFFSET / 0.0 mm development target
 - [ ] deck / piston / rod stack
 - [ ] piston operating clearance
-- [~] cam axis X/Z — X = 0.0 mm development target; Z remains open
+- [ ] cam axis Z — X = 0.0 mm development target is resolved; Z remains open
 - [ ] crank station positions and journal geometry
 - [ ] cylinder-to-throw mapping and firing order
 - [ ] flywheel / pulley planes
