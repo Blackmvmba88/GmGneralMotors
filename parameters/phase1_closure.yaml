@@ -1,5 +1,5 @@
 schema_version: 1
-baseline: 0.7.0
+baseline: 0.8.0
 status: PHASE_1_NUMERIC_CLOSURE
 
 principle: >-
@@ -16,8 +16,10 @@ required_numeric_handoff:
     status: UNKNOWN
     source_requirement: DESIGN_TARGET_OR_SOURCED
   left_bank_front_cylinder_y_mm:
-    status: UNKNOWN
-    source_requirement: DATUM_DECISION
+    value: 0.0
+    status: LOCKED
+    source: coordinate_system_v0.8.0
+    rationale: Coordinate datum definition; does not imply front packaging clearance.
   bank_longitudinal_offset_mm:
     status: UNKNOWN
     source_requirement: ARCHITECTURE_DECISION
@@ -55,8 +57,9 @@ required_numeric_handoff:
     status: UNKNOWN
     source_requirement: LOAD_DURABILITY_DESIGN
   cam_axis_x_mm:
-    status: UNKNOWN
-    source_requirement: PACKAGING_VALVETRAIN_DESIGN
+    value: 0.0
+    status: DESIGN_TARGET
+    rationale: Symmetric OHV development baseline places the cam axis on the engine center plane; production lock remains false.
   cam_axis_z_mm:
     status: UNKNOWN
     source_requirement: PACKAGING_VALVETRAIN_DESIGN
