@@ -1,6 +1,6 @@
 # V8 ENGINE — Engineering Roadmap
 
-**Baseline:** 0.7.0  
+**Baseline:** 0.8.0  
 **Current phase:** Phase 1 — Dimensional Reconstruction  
 **3D modeling:** LOCKED
 
@@ -37,19 +37,21 @@ Completed:
 - [x] cylinder centers separated conceptually from crankpin stations
 - [x] constrained design-space screening for bridge/spacing, rod ratio and RPM
 - [x] bore-axis offset selected as ZERO_OFFSET / 0.0 mm development target
+- [x] DATUM_C locked to left-bank front-cylinder center plane at Y = 0.0 mm
+- [x] OHV cam axis X constrained to engine center plane at X = 0.0 mm
 
 Still required:
 
 - [ ] close overall envelope interpretation
 - [ ] select inter-cylinder bridge / center spacing
-- [ ] select front cylinder longitudinal datum
+- [x] select front cylinder longitudinal datum — DATUM_C / Y = 0.0 mm
 - [ ] define bank longitudinal stagger
 - [x] select zero/nonzero bore-axis offset and value — ZERO_OFFSET / 0.0 mm development target
 - [ ] close deck / rod / piston stack
 - [ ] resolve piston operating clearance / wrist pin
 - [ ] define crank journal dimensions and station positions
 - [ ] define connecting-rod dimensions
-- [ ] define camshaft X/Z position
+- [~] define camshaft X/Z position — X resolved, Z open
 - [ ] define head / chamber / gasket / crown-volume inputs
 - [ ] define accessory/flywheel interface planes
 - [ ] attach provenance/status to every critical input
@@ -112,11 +114,11 @@ Required entities:
 ### Numeric handoff still required
 
 - [ ] center spacing / bridge
-- [ ] front cylinder datum
+- [x] front cylinder datum — DATUM_C / Y = 0.0 mm
 - [ ] bank stagger
 - [x] bore-axis offset mode/value — development target
 - [ ] deck height
-- [ ] cam axis X/Z
+- [~] cam axis X/Z — X resolved, Z open
 - [ ] crank station map
 - [ ] cylinder-to-throw / rod-journal mapping
 - [ ] flywheel / pulley Y positions
