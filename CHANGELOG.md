@@ -4,6 +4,14 @@ All notable engineering-baseline changes are recorded here.
 
 ## [Unreleased]
 
+### Datum closure — baseline 0.8.0
+
+- locked `DATUM_C` as the left-bank front-cylinder center plane at `Y = 0.0 mm`
+- clarified that this datum choice is a coordinate convention, not a front-package dimension
+- constrained the symmetric OHV development cam axis to `X = 0.0 mm`
+- kept cam-axis `Z`, bank stagger, package planes and physical front/rear clearances unresolved
+- reduced the remaining Tier A placement blockers without copying production-engine dimensions
+
 ### Advanced
 
 - baseline metadata advanced to 0.7.0

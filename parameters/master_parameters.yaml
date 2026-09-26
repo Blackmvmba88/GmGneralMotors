@@ -1,5 +1,5 @@
 schema_version: 1
-baseline: 0.7.0
+baseline: 0.8.0
 project: GmGneralMotors_V8
 phase: PHASE_1_DIMENSIONAL_RECONSTRUCTION
 
@@ -50,8 +50,11 @@ cylinder:
     status: UNKNOWN
     relation: bore_mm + inter_cylinder_bridge_mm
   left_bank_front_center_y_mm:
-    value: null
-    status: UNKNOWN
+    value: 0.0
+    status: LOCKED
+    source: coordinate_system_v0.8.0
+    authority_scope: DATUM_DEFINITION
+    note: Defines DATUM_C as the left-bank front-cylinder center plane; this is a coordinate convention, not a physical packaging clearance.
   bank_longitudinal_offset_mm:
     value: null
     status: UNKNOWN
@@ -181,8 +184,11 @@ camshaft:
     status: VERIFIED
     authority_scope: OHV_DEVELOPMENT_RELATION
   axis_offset_x_mm:
-    value: null
-    status: UNKNOWN
+    value: 0.0
+    status: DESIGN_TARGET
+    authority_scope: OHV_SYMMETRIC_DEVELOPMENT
+    production_locked: false
+    rationale: Central camshaft is constrained to the engine longitudinal center plane for the symmetric OHV development baseline.
   axis_offset_z_mm:
     value: null
     status: UNKNOWN
@@ -256,4 +262,4 @@ coordinate_system:
   rear_direction: positive_y
   left_bank: negative_x
   right_bank: positive_x
-  origin: crank_centerline__engine_midplane__front_datum
+  origin: crank_centerline__engine_midplane__left_bank_front_cylinder_center_plane
