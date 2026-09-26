@@ -1,5 +1,5 @@
 schema_version: 1
-baseline: 0.6.0
+baseline: 0.7.0
 status: PHASE_1_NUMERIC_CLOSURE
 
 principle: >-
@@ -22,11 +22,14 @@ required_numeric_handoff:
     status: UNKNOWN
     source_requirement: ARCHITECTURE_DECISION
   bore_axis_offset_mode:
-    status: DECISION_PENDING
+    value: ZERO_OFFSET
+    status: DESIGN_TARGET
+    rationale: Neutral symmetric baseline for Phase 1 skeleton placement; nonzero offset requires a separate evidence-backed decision.
     allowed: [ZERO_OFFSET, NONZERO_OFFSET]
   bore_axis_offset_mm:
-    status: UNKNOWN
-    required_when: bore_axis_offset_mode == NONZERO_OFFSET
+    value: 0.0
+    status: DESIGN_TARGET
+    rationale: Consequence of ZERO_OFFSET development mode; production lock remains false.
   deck_height_mm:
     status: UNKNOWN
     relation: crank_radius_mm + rod_length_mm + compression_height_mm + deck_clearance_mm
