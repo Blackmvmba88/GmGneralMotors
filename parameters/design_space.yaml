@@ -1,0 +1,51 @@
+schema_version: 1
+baseline: 0.6.0
+status: SCREENING_ONLY
+
+authority:
+  note: >-
+    Values in this file are exploratory design-space samples only. They are not
+    approved engine dimensions and must not be copied into CAD as authority.
+
+development_geometry:
+  bore_mm: 101.6
+  stroke_mm: 88.9
+  source: parameters/master_parameters.yaml
+
+cylinder_packaging_sweep:
+  inter_cylinder_bridge_mm:
+    values: [5.0, 7.5, 10.0, 12.5, 15.0]
+    status: SCREENING_ONLY
+    note: Pure sweep for packaging sensitivity; not a recommended bridge range.
+  outputs:
+    - center_spacing_mm
+    - four_cylinder_center_span_mm
+    - residual_vs_bank_reference_length_mm
+
+rod_ratio_sweep:
+  rod_to_stroke_ratio:
+    values: [1.60, 1.65, 1.70, 1.75, 1.80]
+    status: SCREENING_ONLY
+    note: Pure sensitivity sweep; not an accepted rod-ratio design range.
+  outputs:
+    - connecting_rod_length_mm
+
+rpm_sweep:
+  rpm:
+    values: [6000, 6500, 7000, 7500, 8000]
+    status: SCREENING_ONLY
+    note: Screening points for piston-speed and order-frequency sensitivity.
+  outputs:
+    - mean_piston_speed_mps
+    - firing_order_4x_hz
+
+bore_axis_offset:
+  development_mode:
+    value: ZERO_OFFSET
+    offset_mm: 0.0
+    status: DESIGN_TARGET
+    rationale: >-
+      Use a neutral symmetric baseline for Phase 1 skeleton placement. A
+      deliberate nonzero bore offset requires a separate friction, side-thrust,
+      combustion, durability and NVH rationale before promotion.
+    production_locked: false
