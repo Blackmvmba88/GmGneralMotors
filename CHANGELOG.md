@@ -4,7 +4,34 @@ All notable engineering-baseline changes are recorded here.
 
 ## [Unreleased]
 
+### Advanced
+
+- baseline metadata advanced to 0.7.0
+- bore-axis offset resolved at development level as `ZERO_OFFSET / 0.0 mm`
+- Tier A numeric closure reduced without production-locking the architecture
+- Phase 1 now uses explicit constrained sensitivity sweeps before promoting new dimensions
+
 ### Added
+
+- `parameters/design_space.yaml`
+- `engineering/design_space.py`
+- `scripts/phase1_design_space.py`
+- `tests/test_design_space.py`
+- `docs/phase1_design_space.md`
+- cylinder bridge / center-spacing packaging sweep
+- rod/stroke ratio sensitivity sweep
+- RPM / mean-piston-speed / 4X firing-frequency sweep
+- CI hook for design-space screening
+
+### Guardrails
+
+- sweep values remain `SCREENING_ONLY`
+- RPM samples do not define a safe redline
+- rod-ratio samples do not define an accepted design range
+- bridge samples do not define a cooling/sealing/structural solution
+- ZERO_OFFSET is a development target, not a production lock
+
+### Previous unreleased additions
 
 - `parameters/phase1_closure.yaml` numeric handoff ledger
 - `engineering/phase1_gate.py` conservative closure evaluator
