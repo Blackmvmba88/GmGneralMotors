@@ -1,0 +1,62 @@
+{
+  "schema": "blackmamba.blender-object-mapping.v1",
+  "system_id": "BM-VOCHO-WHEEL-001",
+  "source_blend_sha256": null,
+  "mappings": [
+    {
+      "source_object": null,
+      "target_object": "BMV_WHEEL_ROOT",
+      "state": "unmapped"
+    },
+    {
+      "source_object": null,
+      "target_object": "BMV_TIRE",
+      "state": "unmapped"
+    },
+    {
+      "source_object": null,
+      "target_object": "BMV_RIM",
+      "state": "unmapped"
+    },
+    {
+      "source_object": null,
+      "target_object": "BMV_HUB",
+      "state": "unmapped"
+    },
+    {
+      "source_object": null,
+      "target_object": "BMV_STUD_01",
+      "state": "unmapped"
+    },
+    {
+      "source_object": null,
+      "target_object": "BMV_STUD_02",
+      "state": "unmapped"
+    },
+    {
+      "source_object": null,
+      "target_object": "BMV_STUD_03",
+      "state": "unmapped"
+    },
+    {
+      "source_object": null,
+      "target_object": "BMV_STUD_04",
+      "state": "unmapped"
+    },
+    {
+      "source_object": null,
+      "target_object": "BMV_VALVE",
+      "state": "unmapped"
+    },
+    {
+      "source_object": null,
+      "target_object": "BMV_AXIS_ROTATION",
+      "state": "unmapped"
+    },
+    {
+      "source_object": null,
+      "target_object": "BMV_PLANE_MOUNT",
+      "state": "unmapped"
+    }
+  ]
+}
