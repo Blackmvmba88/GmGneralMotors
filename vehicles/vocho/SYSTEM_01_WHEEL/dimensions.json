@@ -1,0 +1,78 @@
+{
+  "schema": "blackmamba.vehicle-component-dimensions.v1",
+  "system_id": "BM-VOCHO-WHEEL-001",
+  "vehicle": "vocho",
+  "component": "wheel_assembly",
+  "units": "mm",
+  "status": "SPECIFICATION_OPEN",
+  "source_of_truth": "this_file",
+  "parameters": {
+    "rim_nominal_diameter": {
+      "value": null,
+      "state": "tbd",
+      "provenance": null
+    },
+    "rim_width": {
+      "value": null,
+      "state": "tbd",
+      "provenance": null
+    },
+    "tire_outer_diameter": {
+      "value": null,
+      "state": "tbd",
+      "provenance": null
+    },
+    "tire_section_width": {
+      "value": null,
+      "state": "tbd",
+      "provenance": null
+    },
+    "hub_center_interface_diameter": {
+      "value": null,
+      "state": "tbd",
+      "provenance": null
+    },
+    "stud_count": {
+      "value": 4,
+      "state": "provisional",
+      "provenance": "Current modeling assumption; must be verified against target vehicle/reference before certification."
+    },
+    "pitch_circle_diameter": {
+      "value": null,
+      "state": "tbd",
+      "provenance": null
+    },
+    "stud_diameter": {
+      "value": null,
+      "state": "tbd",
+      "provenance": null
+    },
+    "mounting_plane_offset": {
+      "value": null,
+      "state": "tbd",
+      "provenance": null
+    },
+    "tire_centerline_offset": {
+      "value": null,
+      "state": "tbd",
+      "provenance": null
+    },
+    "valve_angle_deg": {
+      "value": null,
+      "state": "tbd",
+      "provenance": null
+    }
+  },
+  "derived": {},
+  "required_reference_assets": [
+    "front_reference",
+    "side_reference",
+    "section_reference_or_measurement"
+  ],
+  "certification": {
+    "dimensional_closed": false,
+    "blueprint_verified": false,
+    "blender_verified": false,
+    "warpblack_certificate": null
+  }
+}
