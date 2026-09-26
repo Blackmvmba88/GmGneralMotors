@@ -34,6 +34,10 @@ class SkeletonRelationTests(unittest.TestCase):
         centers = longitudinal_cylinder_centers_mm(50.0, 110.0, count=4)
         self.assertEqual(centers, (50.0, 160.0, 270.0, 380.0))
 
+    def test_locked_left_front_datum_can_be_origin(self):
+        centers = longitudinal_cylinder_centers_mm(0.0, 111.6, count=4)
+        self.assertEqual(centers, (0.0, 111.6, 223.2, 334.8))
+
     def test_bank_stagger_is_explicit(self):
         left, right = paired_bank_cylinder_centers_mm(50.0, 110.0, 20.0)
         self.assertEqual(left, (50.0, 160.0, 270.0, 380.0))
