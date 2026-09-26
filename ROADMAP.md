@@ -1,6 +1,6 @@
 # V8 ENGINE — Engineering Roadmap
 
-**Baseline:** 0.6.0  
+**Baseline:** 0.7.0  
 **Current phase:** Phase 1 — Dimensional Reconstruction  
 **3D modeling:** LOCKED
 
@@ -35,6 +35,8 @@ Completed:
 - [x] deck-plane construction relation defined
 - [x] bore-axis offset made an explicit design decision
 - [x] cylinder centers separated conceptually from crankpin stations
+- [x] constrained design-space screening for bridge/spacing, rod ratio and RPM
+- [x] bore-axis offset selected as ZERO_OFFSET / 0.0 mm development target
 
 Still required:
 
@@ -42,7 +44,7 @@ Still required:
 - [ ] select inter-cylinder bridge / center spacing
 - [ ] select front cylinder longitudinal datum
 - [ ] define bank longitudinal stagger
-- [ ] select zero/nonzero bore-axis offset and value
+- [x] select zero/nonzero bore-axis offset and value — ZERO_OFFSET / 0.0 mm development target
 - [ ] close deck / rod / piston stack
 - [ ] resolve piston operating clearance / wrist pin
 - [ ] define crank journal dimensions and station positions
@@ -112,7 +114,7 @@ Required entities:
 - [ ] center spacing / bridge
 - [ ] front cylinder datum
 - [ ] bank stagger
-- [ ] bore-axis offset mode/value
+- [x] bore-axis offset mode/value — development target
 - [ ] deck height
 - [ ] cam axis X/Z
 - [ ] crank station map
