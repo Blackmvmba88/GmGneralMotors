@@ -24,6 +24,7 @@ ALLOWED_STATES = {
     "VERIFIED",
     "LOCKED",
     "DECISION_PENDING",
+    "DESIGN_TARGET",
 }
 
 
