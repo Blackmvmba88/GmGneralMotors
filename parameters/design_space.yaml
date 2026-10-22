@@ -1,5 +1,5 @@
 schema_version: 1
-baseline: 0.8.0
+baseline: 0.9.0
 status: SCREENING_ONLY
 
 authority:
@@ -21,6 +21,13 @@ cylinder_packaging_sweep:
     - center_spacing_mm
     - four_cylinder_center_span_mm
     - residual_vs_bank_reference_length_mm
+  selected_development_target:
+    inter_cylinder_bridge_mm: 10.0
+    cylinder_center_spacing_mm: 111.6
+    four_cylinder_center_span_mm: 334.8
+    status: DESIGN_TARGET
+    production_locked: false
+    rationale: Central sweep candidate chosen to advance packaging; still subject to thermal, sealing, casting, stiffness and modal validation.
 
 rod_ratio_sweep:
   rod_to_stroke_ratio:

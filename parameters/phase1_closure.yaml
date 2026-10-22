@@ -1,5 +1,5 @@
 schema_version: 1
-baseline: 0.8.0
+baseline: 0.9.0
 status: PHASE_1_NUMERIC_CLOSURE
 
 principle: >-
@@ -9,12 +9,14 @@ principle: >-
 
 required_numeric_handoff:
   cylinder_center_spacing_mm:
-    status: UNKNOWN
+    value: 111.6
+    status: CALCULATED
     relation: bore_mm + inter_cylinder_bridge_mm
-    source_requirement: DERIVED_OR_SOURCED
+    source: phase1_design_space_v0.9.0
   inter_cylinder_bridge_mm:
-    status: UNKNOWN
-    source_requirement: DESIGN_TARGET_OR_SOURCED
+    value: 10.0
+    status: DESIGN_TARGET
+    rationale: Mid-sweep packaging target; production lock withheld pending cooling, sealing, casting, stiffness, thermal and modal evidence.
   left_bank_front_cylinder_y_mm:
     value: 0.0
     status: LOCKED
@@ -22,7 +24,8 @@ required_numeric_handoff:
     rationale: Coordinate datum definition; does not imply front packaging clearance.
   bank_longitudinal_offset_mm:
     status: UNKNOWN
-    source_requirement: ARCHITECTURE_DECISION
+    relation: 0.5 * (left_rod_big_end_width_mm + right_rod_big_end_width_mm) + inter_rod_side_clearance_mm
+    source_requirement: ROD_BIG_END_WIDTH_AND_SIDE_CLEARANCE
   bore_axis_offset_mode:
     value: ZERO_OFFSET
     status: DESIGN_TARGET
@@ -49,7 +52,8 @@ required_numeric_handoff:
     source_requirement: MATERIAL_THERMAL_DESIGN
   crank_station_positions_mm:
     status: UNKNOWN
-    source_requirement: CRANK_ROD_ARCHITECTURE
+    relation: midpoint(left_bank_cylinder_center_y, right_bank_cylinder_center_y) for each common-pin pair
+    source_requirement: BANK_STAGGER_AND_ROD_PAIRING
   main_journal_diameter_mm:
     status: UNKNOWN
     source_requirement: LOAD_DURABILITY_DESIGN

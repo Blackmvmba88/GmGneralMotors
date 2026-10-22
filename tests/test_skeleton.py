@@ -6,6 +6,7 @@ from engineering.skeleton import (
     bank_axis_unit_vectors,
     bridge_width_from_spacing_mm,
     center_spacing_from_bore_and_bridge_mm,
+    common_pin_station_positions_mm,
     engine_center_plane_normal,
     longitudinal_cylinder_centers_mm,
     paired_bank_cylinder_centers_mm,
@@ -42,6 +43,15 @@ class SkeletonRelationTests(unittest.TestCase):
         left, right = paired_bank_cylinder_centers_mm(50.0, 110.0, 20.0)
         self.assertEqual(left, (50.0, 160.0, 270.0, 380.0))
         self.assertEqual(right, (70.0, 180.0, 290.0, 400.0))
+
+    def test_common_pin_stations_are_pair_midpoints(self):
+        left, right = paired_bank_cylinder_centers_mm(0.0, 111.6, 20.0)
+        stations = common_pin_station_positions_mm(left, right)
+        self.assertEqual(stations, (10.0, 121.6, 233.2, 344.8))
+
+    def test_common_pin_station_requires_equal_pair_counts(self):
+        with self.assertRaises(ValueError):
+            common_pin_station_positions_mm((0.0, 100.0), (10.0,))
 
     def test_point_along_bank_axis(self):
         axis = bank_axis_unit_vectors(90.0).right

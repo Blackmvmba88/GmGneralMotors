@@ -3,7 +3,7 @@
 > **Status:** PHASE 1 — DIMENSIONAL RECONSTRUCTION  
 > **3D modeling:** LOCKED  
 > **Blender:** LOCKED  
-> **Baseline:** v0.8.0
+> **Baseline:** v0.9.0
 
 This repository is the engineering source of truth for a modular, parametric premium V8 digital master. The goal is not to draw an engine by eye; it is to define enough geometry, interfaces, parameters, kinematics, resonance behavior and energy paths that the engine becomes a reproducible consequence of the system.
 
@@ -186,10 +186,26 @@ These points are **SCREENING_ONLY** and do not define a safe redline.
 
 Phase 1 also adopts `ZERO_OFFSET / 0.0 mm` bore-axis offset as a **DESIGN_TARGET** for the neutral symmetric development baseline. This closes one skeleton-placement decision without production-locking the architecture.
 
-Baseline v0.8.0 closes two more arbitrary placement freedoms without inventing hardware dimensions:
+Baseline v0.8.0 closed two arbitrary placement freedoms without inventing hardware dimensions:
 
 - `DATUM_C` is now the left-bank front-cylinder center plane at `Y = 0.0 mm`; this is purely a coordinate definition.
 - the OHV camshaft development axis is constrained to the engine center plane at `X = 0.0 mm`; cam `Z` remains unresolved.
+
+Baseline v0.9.0 now promotes a bank-packaging development target:
+
+```text
+inter-cylinder bridge = 10.0 mm   DESIGN_TARGET
+center spacing        = 111.6 mm   CALCULATED
+L1→L4 center span     = 334.8 mm
+rod pairing           = SIDE_BY_SIDE_COMMON_PIN
+station pairs         = L1/R1, L2/R2, L3/R3, L4/R4
+```
+
+The common crankpin station relation is now:
+
+`Y_station = (Y_left + Y_right) / 2`
+
+The numeric bank stagger remains unresolved until rod big-end widths and side clearance are governed. Throw phase and firing order also remain open.
 
 See:
 
@@ -249,14 +265,14 @@ Completed:
 
 Still blocking authoritative CAD:
 
-- [ ] inter-cylinder bridge / cylinder center spacing
+- [x] inter-cylinder bridge / cylinder center spacing — 10.0 / 111.6 mm development target
 - [x] front cylinder longitudinal datum — left-bank front-cylinder center plane = Y 0.0 mm
-- [ ] bank longitudinal stagger
+- [ ] bank longitudinal stagger — relation fixed; rod widths/clearance still open
 - [x] bore-axis offset mode/value — ZERO_OFFSET / 0.0 mm development target
 - [ ] deck / piston / rod stack
 - [ ] piston operating clearance
 - [ ] cam axis Z — X = 0.0 mm development target is resolved; Z remains open
-- [ ] crank station positions and journal geometry
+- [ ] crank station positions and journal geometry — station relation fixed; numeric stagger/journals open
 - [ ] cylinder-to-throw mapping and firing order
 - [ ] flywheel / pulley planes
 - [ ] operating RPM envelope
