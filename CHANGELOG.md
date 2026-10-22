@@ -4,6 +4,19 @@ All notable engineering-baseline changes are recorded here.
 
 ## [Unreleased]
 
+### Bank packaging — baseline 0.9.0
+
+- selected `10.0 mm` inter-cylinder bridge as a development target
+- calculated `111.6 mm` cylinder center spacing and `334.8 mm` four-cylinder center span
+- selected `SIDE_BY_SIDE_COMMON_PIN` rod pairing as the first cross-plane development topology
+- paired longitudinal stations `L1/R1` through `L4/R4`
+- defined each common crankpin station as the midpoint of its paired bank cylinder centers
+- retained numeric bank stagger as UNKNOWN until rod big-end widths and side clearance are governed
+- retained throw-phase assignment and firing order as unresolved
+- added `docs/bank_packaging_v09.md`
+- added executable common-pin crank-station relation and tests
+- kept CAD/Blender locked
+
 ### Datum closure — baseline 0.8.0
 
 - locked `DATUM_C` as the left-bank front-cylinder center plane at `Y = 0.0 mm`
