@@ -1,6 +1,6 @@
 # V8 ENGINE — Engineering Roadmap
 
-**Baseline:** 0.8.0  
+**Baseline:** 0.9.0  
 **Current phase:** Phase 1 — Dimensional Reconstruction  
 **3D modeling:** LOCKED
 
@@ -39,13 +39,17 @@ Completed:
 - [x] bore-axis offset selected as ZERO_OFFSET / 0.0 mm development target
 - [x] DATUM_C locked to left-bank front-cylinder center plane at Y = 0.0 mm
 - [x] OHV cam axis X constrained to engine center plane at X = 0.0 mm
+- [x] inter-cylinder bridge selected at 10.0 mm development target
+- [x] cylinder center spacing calculated at 111.6 mm
+- [x] side-by-side common-pin rod pairing selected as development direction
+- [x] common crankpin station midpoint relation defined
 
 Still required:
 
 - [ ] close overall envelope interpretation
-- [ ] select inter-cylinder bridge / center spacing
+- [x] select inter-cylinder bridge / center spacing — 10.0 / 111.6 mm
 - [x] select front cylinder longitudinal datum — DATUM_C / Y = 0.0 mm
-- [ ] define bank longitudinal stagger
+- [ ] define numeric bank longitudinal stagger — relation fixed, rod widths/clearance open
 - [x] select zero/nonzero bore-axis offset and value — ZERO_OFFSET / 0.0 mm development target
 - [ ] close deck / rod / piston stack
 - [ ] resolve piston operating clearance / wrist pin
@@ -113,13 +117,13 @@ Required entities:
 
 ### Numeric handoff still required
 
-- [ ] center spacing / bridge
+- [x] center spacing / bridge — 111.6 / 10.0 mm development target
 - [x] front cylinder datum — DATUM_C / Y = 0.0 mm
-- [ ] bank stagger
+- [ ] bank stagger — relation fixed, numeric inputs open
 - [x] bore-axis offset mode/value — development target
 - [ ] deck height
 - [ ] cam axis Z — X resolved
-- [ ] crank station map
+- [ ] crank station map — pair topology/relation fixed; numeric Y waits for stagger
 - [ ] cylinder-to-throw / rod-journal mapping
 - [ ] flywheel / pulley Y positions
 
@@ -141,7 +145,7 @@ Still required:
 
 - [ ] connecting-rod center-to-center length
 - [ ] cylinder-to-throw mapping
-- [ ] rod-journal pairing
+- [x] rod-journal pairing — L1/R1 through L4/R4 common-pin development topology
 - [ ] firing order
 - [ ] crank station spacing / bank stagger
 - [ ] journal diameters
