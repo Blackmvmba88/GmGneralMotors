@@ -1,5 +1,5 @@
 schema_version: 1
-baseline: 0.6.0
+baseline: 0.9.0
 status: PHASE_1_TO_PHASE_2_RELATION_LAYER
 
 coordinate_frame:
@@ -26,7 +26,8 @@ bank_geometry:
 longitudinal_geometry:
   cylinder_center_spacing:
     equation: bore_mm + inter_cylinder_bridge_mm
-    status: RELATION_LOCKED_INPUTS_UNKNOWN
+    current_value_mm: 111.6
+    status: CALCULATED_FROM_DEVELOPMENT_TARGET
   bank_cylinder_centers:
     equation: front_cylinder_center_y_mm + index * cylinder_center_spacing_mm
     index_domain: [0, 1, 2, 3]
@@ -37,7 +38,12 @@ longitudinal_geometry:
   side_by_side_common_pin_bank_offset_candidate:
     equation: 0.5 * (left_rod_big_end_width_mm + right_rod_big_end_width_mm) + inter_rod_side_clearance_mm
     applicability: SIDE_BY_SIDE_RODS_ON_COMMON_CRANKPIN
-    status: ARCHITECTURE_DEPENDENT_INPUTS_UNKNOWN
+    architecture_status: DEVELOPMENT_TARGET
+    status: INPUTS_UNKNOWN
+  common_pin_crank_station:
+    equation: 0.5 * (left_cylinder_center_y_mm + right_cylinder_center_y_mm)
+    pair_map: [[L1, R1], [L2, R2], [L3, R3], [L4, R4]]
+    status: RELATION_LOCKED_INPUTS_UNKNOWN
 
 plane_relations:
   deck_reference_point:
@@ -59,8 +65,8 @@ cam_axis:
     value: [0.0, 1.0, 0.0]
     status: DEVELOPMENT_RELATION
   x_position_mm:
-    value: null
-    status: UNKNOWN
+    value: 0.0
+    status: DESIGN_TARGET
   z_position_mm:
     value: null
     status: UNKNOWN
@@ -68,25 +74,20 @@ cam_axis:
 
 bore_axis_offset:
   mode:
-    value: UNRESOLVED
-    status: UNKNOWN
+    value: ZERO_OFFSET
+    status: DESIGN_TARGET
   offset_mm:
-    value: null
-    status: UNKNOWN
-  note: Do not assume every cylinder axis intersects the crank centerline until a zero-offset or deliberate bore-offset architecture is selected.
+    value: 0.0
+    status: DESIGN_TARGET
+  note: Neutral symmetric development baseline; production lock remains false.
 
 crankpin_station_policy:
   status: SEPARATE_FROM_CYLINDER_CENTERS
   note: Crankpin station planes are not derived from cylinder longitudinal centers until rod-journal pairing, rod widths, bank stagger and cylinder-to-throw mapping are frozen.
 
 unresolved_numeric_inputs:
-  - inter_cylinder_bridge_mm
-  - cylinder_center_spacing_mm
-  - left_bank_front_center_y_mm
   - right_minus_left_bank_offset_mm
   - deck_height_mm
-  - bore_axis_offset_mm
-  - cam_axis_x_mm
   - cam_axis_z_mm
   - crank_station_positions_mm
   - flywheel_plane_y_mm
