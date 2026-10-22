@@ -1,5 +1,5 @@
 schema_version: 1
-baseline: 0.9.0
+baseline: 0.10.0
 status: DEVELOPMENT_DIRECTION
 
 selection:
@@ -85,6 +85,14 @@ crank_throw_assignment:
 firing_order:
   value: null
   status: UNKNOWN
+  candidate_search:
+    station_phase_permutations: 24
+    pair_lead_choices: 16
+    total_candidates: 384
+    status: CALCULATED
+    source: engineering/firing_candidates.py
+    ranking_status: SCREENING_ONLY
+    note: Candidate generation uses only internal S1-S4 common-pin topology; no manufacturer firing order is imported.
 
 combustion_event_spacing_deg:
   value: 90
