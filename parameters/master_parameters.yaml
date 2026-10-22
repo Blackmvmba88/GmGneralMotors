@@ -1,5 +1,5 @@
 schema_version: 1
-baseline: 0.8.0
+baseline: 0.9.0
 project: GmGneralMotors_V8
 phase: PHASE_1_DIMENSIONAL_RECONSTRUCTION
 
@@ -43,12 +43,17 @@ cylinder:
     source: current_blueprint
     authority_scope: DEVELOPMENT_AUTHORITY
   inter_cylinder_bridge_mm:
-    value: null
-    status: UNKNOWN
+    value: 10.0
+    status: DESIGN_TARGET
+    source: phase1_design_space_v0.9.0
+    authority_scope: DEVELOPMENT
+    production_locked: false
+    rationale: Mid-sweep packaging target selected to advance the skeleton; must still pass cooling, sealing, casting, stiffness, thermal and modal validation.
   center_spacing_mm:
-    value: null
-    status: UNKNOWN
+    value: 111.6
+    status: CALCULATED
     relation: bore_mm + inter_cylinder_bridge_mm
+    source: phase1_design_space_v0.9.0
   left_bank_front_center_y_mm:
     value: 0.0
     status: LOCKED
@@ -59,6 +64,8 @@ cylinder:
     value: null
     status: UNKNOWN
     convention: right_bank_front_center_y - left_bank_front_center_y
+    relation: 0.5 * (left_rod_big_end_width_mm + right_rod_big_end_width_mm) + inter_rod_side_clearance_mm
+    note: Numeric stagger waits for governed rod big-end widths and side clearance.
   bore_axis_offset_mode:
     value: ZERO_OFFSET
     status: DESIGN_TARGET
@@ -134,6 +141,12 @@ piston:
     status: UNKNOWN
 
 connecting_rod:
+  pairing_architecture:
+    value: SIDE_BY_SIDE_COMMON_PIN
+    status: DESIGN_TARGET
+    authority_scope: DEVELOPMENT
+    production_locked: false
+    rationale: Simple four-common-pin cross-plane development architecture; fork-and-blade remains a future alternative if packaging/NVH evidence warrants it.
   center_to_center_length_mm:
     value: null
     status: UNKNOWN
@@ -169,6 +182,17 @@ crankshaft:
   crank_station_positions_y_mm:
     value: []
     status: UNKNOWN
+    relation: midpoint(left_bank_cylinder_center_y, right_bank_cylinder_center_y) for each paired station
+  rod_journal_pairing:
+    value:
+      S1: [L1, R1]
+      S2: [L2, R2]
+      S3: [L3, R3]
+      S4: [L4, R4]
+    status: DESIGN_TARGET
+    authority_scope: DEVELOPMENT
+    production_locked: false
+    note: Longitudinal pairing only; crank throw phase assignment and firing order remain unresolved.
   phasing:
     value: null
     status: UNKNOWN
