@@ -36,6 +36,9 @@ jobs:
       - name: Run Phase 1 design-space screening
         run: python scripts/phase1_design_space.py
 
+      - name: Generate internal firing-sequence candidates
+        run: python scripts/firing_candidate_report.py
+
       - name: Generate dimensional reconstruction audit
         run: python scripts/dimensional_audit.py --csv validation/dimensional_candidates.csv
 

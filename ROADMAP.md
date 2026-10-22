@@ -1,6 +1,6 @@
 # V8 ENGINE — Engineering Roadmap
 
-**Baseline:** 0.9.0  
+**Baseline:** 0.10.0  
 **Current phase:** Phase 1 — Dimensional Reconstruction  
 **3D modeling:** LOCKED
 
@@ -43,6 +43,8 @@ Completed:
 - [x] cylinder center spacing calculated at 111.6 mm
 - [x] side-by-side common-pin rod pairing selected as development direction
 - [x] common crankpin station midpoint relation defined
+- [x] complete 384-candidate internal firing-sequence space generated
+- [x] bank-pulse / same-bank screening metrics implemented
 
 Still required:
 
@@ -80,7 +82,7 @@ Completed:
 Still required:
 
 - [ ] freeze operating RPM range
-- [ ] freeze cylinder-to-throw mapping and firing order
+- [ ] select cylinder-to-throw mapping and firing order from 384 internally generated candidates
 - [ ] add rotating/reciprocating force-order amplitudes
 - [ ] add valvetrain event families
 - [ ] add accessory speed/blade/tooth-pass families
@@ -144,9 +146,9 @@ Completed:
 Still required:
 
 - [ ] connecting-rod center-to-center length
-- [ ] cylinder-to-throw mapping
+- [ ] cylinder-to-throw mapping — candidate generator ready
 - [x] rod-journal pairing — L1/R1 through L4/R4 common-pin development topology
-- [ ] firing order
+- [ ] firing order — candidate generator ready; torsional/NVH selection evidence pending
 - [ ] crank station spacing / bank stagger
 - [ ] journal diameters
 - [ ] counterweight strategy
