@@ -4,6 +4,19 @@ All notable engineering-baseline changes are recorded here.
 
 ## [Unreleased]
 
+### Firing-sequence search — baseline 0.10.0
+
+- enumerated the full internal common-pin even-fire candidate space: `24 × 16 = 384`
+- added deterministic 720° event generation without importing manufacturer firing orders
+- enforced 90° global cadence and 360° paired-cylinder separation
+- added per-bank pulse-gap and same-bank-adjacency screening metrics
+- added `engineering/firing_candidates.py`
+- added `scripts/firing_candidate_report.py`
+- added `tests/test_firing_candidates.py`
+- added `docs/firing_sequence_candidates.md`
+- added firing-candidate report to CI
+- kept final station→throw assignment and firing order unresolved pending torsional/NVH evidence
+
 ### Bank packaging — baseline 0.9.0
 
 - selected `10.0 mm` inter-cylinder bridge as a development target
