@@ -3,7 +3,7 @@
 > **Status:** PHASE 1 — DIMENSIONAL RECONSTRUCTION  
 > **3D modeling:** LOCKED  
 > **Blender:** LOCKED  
-> **Baseline:** v0.9.0
+> **Baseline:** v0.10.0
 
 This repository is the engineering source of truth for a modular, parametric premium V8 digital master. The goal is not to draw an engine by eye; it is to define enough geometry, interfaces, parameters, kinematics, resonance behavior and energy paths that the engine becomes a reproducible consequence of the system.
 
@@ -207,6 +207,20 @@ The common crankpin station relation is now:
 
 The numeric bank stagger remains unresolved until rod big-end widths and side clearance are governed. Throw phase and firing order also remain open.
 
+## Internal firing-sequence search — v0.10.0
+
+The project now enumerates the complete even-fire sequence space implied by its own common-pin topology instead of borrowing a production firing order.
+
+```text
+4! station→phase assignments = 24
+2^4 pair-lead choices        = 16
+total internal candidates    = 384
+```
+
+Every candidate has eight events over 720°, global 90° cadence, one event per cylinder, and paired cylinders 360° apart. The screening report compares bank pulse gaps and same-bank adjacency, but **does not select a final firing order**.
+
+See `docs/firing_sequence_candidates.md` and `scripts/firing_candidate_report.py`.
+
 See:
 
 - `parameters/design_space.yaml`
@@ -273,7 +287,7 @@ Still blocking authoritative CAD:
 - [ ] piston operating clearance
 - [ ] cam axis Z — X = 0.0 mm development target is resolved; Z remains open
 - [ ] crank station positions and journal geometry — station relation fixed; numeric stagger/journals open
-- [ ] cylinder-to-throw mapping and firing order
+- [ ] cylinder-to-throw mapping and firing order — 384 internally valid candidates now generated/ranked for screening
 - [ ] flywheel / pulley planes
 - [ ] operating RPM envelope
 - [ ] sourced modal material properties / boundary inputs
