@@ -121,6 +121,25 @@ def side_by_side_rod_center_separation_mm(
     )
 
 
+def common_pin_station_positions_mm(
+    left_centers_mm: tuple[float, ...],
+    right_centers_mm: tuple[float, ...],
+) -> tuple[float, ...]:
+    """Return common crankpin station Y values at paired-bank center midpoints.
+
+    This relation is valid for the current side-by-side common-pin development
+    direction. It does not assign crank throw phase or firing order.
+    """
+    if len(left_centers_mm) != len(right_centers_mm):
+        raise ValueError("left/right cylinder-center arrays must have equal length")
+    if not left_centers_mm:
+        raise ValueError("at least one cylinder pair is required")
+    return tuple(
+        0.5 * (left_y + right_y)
+        for left_y, right_y in zip(left_centers_mm, right_centers_mm)
+    )
+
+
 def plane_normal_for_crank_normal_plane() -> Vector3:
     """Flywheel/pulley plane normal under the +Y crank-axis convention."""
     return (0.0, 1.0, 0.0)
