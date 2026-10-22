@@ -70,7 +70,7 @@ cam_axis:
   z_position_mm:
     value: null
     status: UNKNOWN
-  note: Position remains unresolved; only parallelism to the crank axis is carried as the development relation.
+  note: X = 0.0 mm is the symmetric development target; Z remains unresolved.
 
 bore_axis_offset:
   mode:
@@ -82,8 +82,8 @@ bore_axis_offset:
   note: Neutral symmetric development baseline; production lock remains false.
 
 crankpin_station_policy:
-  status: SEPARATE_FROM_CYLINDER_CENTERS
-  note: Crankpin station planes are not derived from cylinder longitudinal centers until rod-journal pairing, rod widths, bank stagger and cylinder-to-throw mapping are frozen.
+  status: COMMON_PIN_RELATION_DEFINED_WAITING_NUMERIC_STAGGER
+  note: Longitudinal rod pairs are fixed as L1/R1 through L4/R4 and station Y is the paired-cylinder midpoint. Numeric station positions still wait for rod-width/side-clearance-derived bank stagger; throw phase and firing order are separate downstream decisions.
 
 unresolved_numeric_inputs:
   - right_minus_left_bank_offset_mm
